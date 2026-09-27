@@ -1,0 +1,777 @@
+:root {
+  --bg: #080512;
+  --bg-subtle: #120b22;
+  --violet: #8b5cf6;
+  --violet-glow: rgba(139, 92, 246, 0.4);
+  --violet-soft: #c4b5fd;
+  --ink: #f8f7fc;
+  --ink-dim: #ada4c3;
+
+  /* Optical Glass Tokens */
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 13, 38, 0.6) 45%, rgba(139, 92, 246, 0.08) 100%);
+  --glass-stroke: rgba(255, 255, 255, 0.14);
+  --glass-stroke-top: rgba(255, 255, 255, 0.35);
+
+  --lens-shadow: 0 10px 30px -8px rgba(2, 1, 8, 0.7),
+                 inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.4),
+                 inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.4),
+                 inset 0 0 16px 0 rgba(139, 92, 246, 0.06);
+
+  --radius: 1.15rem;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fluid Auto-Scaler: Everything based on rem scales to screen width */
+html {
+  scroll-behavior: smooth;
+  font-size: clamp(13.5px, 3.8vw, 17px);
+  background-color: var(--bg);
+}
+
+body {
+  min-height: calc(var(--vvh, 1vh) * 100);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--violet);
+  color: #fff;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-inline: max(1rem, env(safe-area-inset-left), env(safe-area-inset-right));
+}
+
+/* ==========================================================================
+   LOW-END OPTIMIZED AMBIENT BACKGROUND
+   ========================================================================== */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  background: radial-gradient(1200px 700px at 80% -10%, var(--bg-subtle), transparent 70%), var(--bg);
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.65;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.orb-a {
+  width: 55vmax;
+  height: 55vmax;
+  left: -15vmax;
+  top: -15vmax;
+  background: radial-gradient(circle closest-side, rgba(91, 33, 182, 0.45) 0%, rgba(91, 33, 182, 0.2) 40%, rgba(91, 33, 182, 0.04) 70%, transparent 100%);
+  animation: drift 28s ease-in-out infinite alternate;
+}
+
+.orb-b {
+  width: 48vmax;
+  height: 48vmax;
+  right: -12vmax;
+  bottom: -12vmax;
+  background: radial-gradient(circle closest-side, rgba(67, 24, 154, 0.4) 0%, rgba(49, 46, 129, 0.18) 45%, rgba(49, 46, 129, 0.03) 75%, transparent 100%);
+  animation: drift 34s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes drift {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(4vmax, 3vmax, 0); }
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(167, 139, 250, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 139, 250, 0.04) 1px, transparent 1px);
+  background-size: 3.2rem 3.2rem;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 35%, transparent 75%);
+}
+
+/* ==========================================================================
+   CONVEX OPTICAL GLASS
+   ========================================================================== */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-stroke);
+  border-top-color: var(--glass-stroke-top);
+  border-radius: var(--radius);
+  box-shadow: var(--lens-shadow);
+  backdrop-filter: blur(9px) saturate(145%);
+  -webkit-backdrop-filter: blur(9px) saturate(145%);
+  transform: translateZ(0);
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 35%, transparent 100%);
+}
+
+/* ==========================================================================
+   NAVIGATION BAR (Auto-Scaled & Safe-Area Aware)
+   ========================================================================== */
+nav {
+  position: sticky;
+  top: max(0.6rem, env(safe-area-inset-top));
+  z-index: 100;
+  width: 100%;
+  max-width: 68rem;
+  margin: 0.5rem auto 0;
+  padding-inline: max(1rem, env(safe-area-inset-left), env(safe-area-inset-right));
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.5rem 0.85rem;
+  min-height: 3.6rem;
+  overflow: visible !important;
+}
+
+.brand {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.05rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.02) 65%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-top-color: rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), inset 0 -1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+}
+
+.brand svg {
+  width: 1.65rem;
+  height: 1.65rem;
+  filter: drop-shadow(0 0 6px var(--violet-glow));
+}
+
+.brand span {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 10px rgba(196, 181, 253, 0.5);
+}
+
+.brand:hover, .brand:active {
+  transform: scale(1.04);
+}
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.65rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-stroke);
+  border-top-color: var(--glass-stroke-top);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  z-index: 1010;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.22s ease, opacity 0.18s ease;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.nav-links {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.65rem;
+  transition: color 0.2s, background 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   BUTTONS & BADGES
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.4rem;
+  min-height: 2.85rem;
+  border-radius: 0.85rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--glass-stroke);
+  border-top-color: var(--glass-stroke-top);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 2px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  background: rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.55);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6 85%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.65);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.45), inset 0 1.5px 1px rgba(255, 255, 255, 0.45);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1.4rem;
+  background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.22) 0%, rgba(139, 92, 246, 0.1) 60%, rgba(10, 6, 20, 0.5) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top-color: rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero {
+  padding-block: clamp(2.8rem, 10vw, 5rem) clamp(2rem, 7vw, 3.5rem);
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: clamp(1.75rem, 6.8vw, 3.5rem);
+  line-height: 1.18;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.1rem;
+  background: linear-gradient(180deg, #ffffff 40%, #c4b5fd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ark {
+  background: linear-gradient(120deg, #c4b5fd, #8b5cf6 60%, #6d28d9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p.sub {
+  max-width: 38rem;
+  margin: 0 auto 1.8rem;
+  color: var(--ink-dim);
+  font-size: clamp(0.92rem, 3.5vw, 1.05rem);
+}
+
+.cta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta .btn {
+  width: 100%;
+  max-width: 20rem;
+}
+
+.tagline {
+  margin-top: 1.6rem;
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   CARDS WITH MAGNIFYING OPTICAL GLASS
+   ========================================================================== */
+section {
+  padding-block: clamp(2.2rem, 8vw, 4rem);
+}
+
+.sec-head {
+  text-align: center;
+  margin-bottom: clamp(1.6rem, 5vw, 2.4rem);
+}
+
+.kicker {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+}
+
+.sec-head h2 {
+  font-size: clamp(1.4rem, 5.5vw, 2.2rem);
+  line-height: 1.22;
+  font-weight: 750;
+  margin-top: 0.5rem;
+}
+
+.sec-head p {
+  color: var(--ink-dim);
+  max-width: 35rem;
+  margin: 0.6rem auto 0;
+  font-size: 0.95rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.card {
+  position: relative;
+  min-width: 0;
+  padding: 1.4rem 1.25rem;
+  overflow: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: 14rem;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(ellipse 110% 70% at 50% 0%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.02) 50%, transparent 80%),
+              radial-gradient(circle at 80% 100%, rgba(139, 92, 246, 0.12) 0%, transparent 60%);
+  opacity: 0.85;
+}
+
+.card:hover, .card:active {
+  transform: translateY(-3px) scale(1.02);
+  border-top-color: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 16px 36px -8px rgba(2, 1, 8, 0.8),
+              inset 0 1.5px 1.5px rgba(255, 255, 255, 0.45),
+              inset 0 0 20px rgba(167, 139, 250, 0.15);
+}
+
+.icon {
+  position: relative;
+  z-index: 1;
+  width: 2.85rem;
+  height: 2.85rem;
+  border-radius: 0.85rem;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.22) 0%, rgba(139, 92, 246, 0.16) 50%, rgba(20, 10, 40, 0.4) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-top-color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 1rem;
+  color: var(--violet-soft);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.icon svg {
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+.card:hover .icon, .card:active .icon {
+  transform: scale(1.1) translateY(-2px);
+}
+
+.card h3 {
+  font-size: 1.12rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+}
+
+.quote {
+  display: block;
+  margin-top: 0.9rem;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--violet-soft);
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   STEPS & TERMINAL
+   ========================================================================== */
+.steps {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding: 1.15rem;
+  align-items: flex-start;
+  min-width: 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 7rem;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step:hover {
+  transform: translateY(-2px) scale(1.015);
+}
+
+.step > div {
+  min-width: 0;
+  flex: 1;
+}
+
+.num {
+  flex: none;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 14px var(--violet-glow);
+}
+
+.step h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.step p {
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-top: 0.65rem;
+  padding: 0.65rem 0.85rem;
+  line-height: 1.45;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  background: rgba(6, 4, 14, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0.6rem;
+  color: #c4b5fd;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   DOWNLOAD CARD & CHIPS
+   ========================================================================== */
+.dl-card {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+  padding: clamp(1.8rem, 6vw, 2.8rem) clamp(1.2rem, 5vw, 2rem);
+}
+
+.dl-card h2 {
+  font-size: clamp(1.4rem, 5vw, 2.1rem);
+  margin: 0.5rem 0 0.75rem;
+}
+
+.dl-card p {
+  color: var(--ink-dim);
+  margin-bottom: 1.6rem;
+  font-size: 0.95rem;
+}
+
+.dl-card .btn {
+  width: 100%;
+  max-width: 20rem;
+}
+
+.req {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.chip {
+  font-size: 0.76rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  color: var(--ink-dim);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.chip b {
+  color: var(--ink);
+}
+
+/* Status-chip variants — same glass base as .chip, just a colored
+   accent so a stack choice reads as good/caution/heavy at a glance. */
+.chip-ok   { color: #34d399; border-color: rgba(52, 211, 153, 0.35); }
+.chip-warn { color: #f59e0b; border-color: rgba(245, 158, 11, 0.35); }
+.chip-heavy{ color: #fb7185; border-color: rgba(251, 113, 133, 0.35); }
+
+/* Compact one-line-per-option rows — used for the Desktop
+   Environment list, where six full cards would be too much scroll
+   for what's really just a name + verdict + a couple of tags. */
+.de-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.9rem;
+  padding: 0.9rem 1.1rem;
+}
+
+.de-row + .de-row {
+  margin-top: 0.6rem;
+}
+
+.de-row .de-name {
+  font-weight: 700;
+  flex: none;
+  min-width: 6rem;
+}
+
+.de-row .de-desc {
+  flex: 1 1 16rem;
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+}
+
+.de-row .de-tags {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.sub-kicker {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+  margin: 2.4rem 0 0.5rem;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+footer {
+  padding: 2.5rem 0 calc(2rem + env(safe-area-inset-bottom));
+  text-align: center;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+}
+
+footer .glass {
+  padding: 1.5rem 1.25rem;
+}
+
+footer a {
+  color: var(--violet-soft);
+  text-decoration: none;
+  padding: 0.2rem 0.35rem;
+}
+
+.foot-links {
+  margin-top: 0.65rem;
+}
+
+.fine {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  opacity: 0.65;
+}
+
+.rv {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN & MOBILE DRAWER ADAPTATION
+   ========================================================================== */
+@media (min-width: 36rem) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .cta .btn, .dl-card .btn { width: auto; }
+}
+
+@media (min-width: 50rem) {
+  .cards { grid-template-columns: repeat(3, 1fr); gap: 1.15rem; }
+  .br-lg { display: inline; }
+}
+
+/* Mobile Screen Layout
+   Raised from 49.99rem: five nav links + the download button no
+   longer fit one desktop row below ~64rem (1024px) once Prerequisites/
+   Choose Stack/Known Issues were added — this keeps the nav from
+   overflowing on tablets and small laptops instead of just phones. */
+@media (max-width: 64rem) {
+  .nav-toggle {
+    display: flex;
+    z-index: 1010;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 1.15rem;
+    background: linear-gradient(135deg, rgba(25, 16, 46, 0.97) 0%, rgba(14, 9, 28, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-top-color: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), inset 0 1.5px 1px rgba(255, 255, 255, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.98);
+    transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s;
+  }
+
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  .nav-links a {
+    padding: 0.85rem 1rem;
+    font-size: 1.02rem;
+    text-align: center;
+    border-radius: 0.75rem;
+  }
+
+  .nav-links .btn {
+    margin-top: 0.35rem;
+    min-height: 3rem;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: rgba(22, 14, 40, 0.95); }
+  .orb { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .rv {
+    opacity: 1;
+    transform: none;
+  }
+}

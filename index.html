@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080512">
+  <meta name="description" content="XoDos-Ark is a native Android app that wraps the XoDos emulator in a secure container.">
+  <title>XoDos-Ark — One Ship. Every System. No Limits.</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="grid"></div>
+  </div>
+
+  <nav aria-label="Primary navigation">
+    <div class="nav-inner glass">
+      <a class="brand" href="#top" aria-label="XoDos-Ark home">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <circle cx="32" cy="32" r="29" stroke="#8b5cf6" stroke-width="3"/>
+          <path d="M32 14c10 0 18 8 18 18s-8 18-18 18-18-8-18-18" stroke="#c4b5fd" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="5" fill="#8b5cf6"/>
+        </svg>
+        <span>XoDos-Ark</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links" id="navMenu">
+        <a href="#features">Features</a>
+        <a href="#prereqs">Prerequisites</a>
+        <a href="#stack">Choose Stack</a>
+        <a href="#start">Get Started</a>
+        <a href="#issues">Known Issues</a>
+        <a class="btn btn-primary" href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">Download APK</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero wrap">
+      <span class="badge glass"><span class="dot"></span>Native Android &bull; Open Source</span>
+      <h1>A ship small enough for your pocket,<br class="br-lg"> large enough for <span class="ark">every world</span> you've imagined.</h1>
+      <p class="sub">XoDos-Ark wraps the powerful XoDos emulator inside a secure container — preserving your entire digital legacy. Windows, Linux, DOS, and retro systems, all in one vessel.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">&darr;&nbsp; Download Latest APK</a>
+        <a class="btn" href="https://github.com/xodiosx/XoDos-Ark" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+      <p class="tagline">"One Ship. Every System. No Limits."</p>
+    </header>
+
+    <section id="features" class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">Why XoDos-Ark</span>
+        <h2>The flood of time can't drown what's inside the Ark</h2>
+        <p>More than an emulator — a vessel of imagination that keeps legacy software alive.</p>
+      </div>
+      <div class="cards">
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          </div>
+          <h3>All-in-One Vessel</h3>
+          <p>Run Windows, Linux, DOS, and exotic retro systems side by side — no separate hypervisors required.</p>
+          <span class="quote">"Two of every kind? No — the Ark holds every kind."</span>
+        </article>
+
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <h3>Pocket-Sized Infinity</h3>
+          <p>The entire history of personal computing fits in your palm. Save snapshots, share configs, and carry your environments everywhere.</p>
+        </article>
+
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3>Built for Android</h3>
+          <p>Optimized touch controls, native Wayland/X11 rendering backends, and low-latency virtual display buffers.</p>
+        </article>
+
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+          </div>
+          <h3>Preservation First</h3>
+          <p>Not just about running the latest distros — it is about keeping classic architecture and legacy binaries running reliably.</p>
+        </article>
+
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3>Secure by Design</h3>
+          <p>Each guest session runs isolated in a chroot/proot jail. Your Android host files remain untouched and secure.</p>
+        </article>
+
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 00-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+          </div>
+          <h3>Weather the Storm</h3>
+          <p>Operate standalone and completely offline without external telemetry or cloud dependency.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="prereqs" class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">Before You Board</span>
+        <h2>Two settings, checked once</h2>
+        <p>Most failed installs trace back to one of these two — not a bad download, not a bad device.</p>
+      </div>
+      <div class="cards">
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 8l-4 4 4 4"/></svg>
+          </div>
+          <h3>Disable child process restrictions</h3>
+          <p><b>Settings → About Phone →</b> tap Build Number 7× <b>→ Developer Options →</b> "Disable child process restrictions." Android 12+ kills an app's spawned processes past a threshold, and installing packages spawns one per operation — without this toggle, installs can die silently partway through.</p>
+          <span class="quote">Resets itself if Developer Options ever gets switched off and back on — recheck it before your next install session.</span>
+        </article>
+
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <h3>Grant only what's asked</h3>
+          <p>When the app requests file/storage permission, grant that dialog as shown. Don't separately enable a broader "manage all files" toggle beyond what it actually asks for — that exposes Android's own system-adjacent paths, and an accidental delete there risks the OS itself, not just app data.</p>
+          <span class="quote">The standard prompt is enough. More access isn't a shortcut, it's a bigger blast radius.</span>
+        </article>
+
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          </div>
+          <h3>One thing to know</h3>
+          <p>Some banking/government apps refuse to open while Developer Options is on. There's no reliable in-app bypass for this right now — the safest option is manually switching Developer Options off before opening those apps, then back on before your next install session.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="stack" class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">Choosing Your Stack</span>
+        <h2>Not every combination is equally proven</h2>
+        <p>Distro, desktop environment, and display server are independent choices — some pairings are field-tested, some are traps.</p>
+      </div>
+
+      <div class="dl-card glass rv" style="margin-bottom:1.5rem;">
+        <span class="kicker">Recommended combo</span>
+        <h2 style="font-size:clamp(1.2rem,4vw,1.6rem);">Debian &bull; XFCE4 &bull; X11</h2>
+        <p>Largest package availability, lightest common desktop environment, and the display path that actually renders reliably in a PRoot container — Wayland typically needs direct kernel access this setup doesn't have.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+          <h3>Tier 1 — Recommended</h3>
+          <p>Debian (trixie, bookworm), Ubuntu (noble). Predictable <code>apt</code>-based installs, best-documented behavior in this environment.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <h3>Tier 2 — Viable alternatives</h3>
+          <p>Arch (current), Fedora, AlmaLinux, RockyLinux, Devuan. Fine choices if you already know the family — just less-trodden ground here specifically.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+          <h3>Tier 3 — Special purpose</h3>
+          <p>Kali NetHunter, OpenSUSE, NixOS. Real use cases, but not general beginner setups — pick these only if you already know why you need them.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <h3>Avoid for general use</h3>
+          <p>Alpine, BusyBox, and anything else on musl libc — Chromium and VS Code won't run on them, full stop. OpenWRT and similarly special-purpose builds aren't for general desktop use either.</p>
+        </article>
+      </div>
+      <p style="text-align:center; margin-top:1.2rem; font-size:0.85rem; color:var(--ink-dim);">
+        The exact list of installable distros changes with every release — check the
+        <a href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener" style="color:var(--violet-soft);">current release page</a>
+        for what's actually selectable in your version, rather than trusting any hardcoded list — including this one.
+      </p>
+
+      <span class="sub-kicker">Display Server</span>
+      <p style="text-align:center; max-width:38rem; margin:0 auto; color:var(--ink-dim); font-size:0.92rem;">
+        Wayland ships as the default on every version, but doesn't reliably render a full desktop here yet — it needs kernel-level DRM/KMS access a PRoot container can't provide. Switch to <b style="color:var(--ink);">X11</b> under <b style="color:var(--ink);">Settings → Display</b> before installing a desktop environment.
+      </p>
+
+      <span class="sub-kicker">Graphics Acceleration (Vulkan &amp; OpenGL)</span>
+      <div class="cards">
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
+          <h3>Software — LLVMPIPE</h3>
+          <p>The universal default for both Vulkan and OpenGL. Runs on any device and handles coursework, browsing, and VS Code without issue. Start here — switch away only if you hit a specific need.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <h3>Hardware — Turnip / PanVK</h3>
+          <p><b>Turnip</b> for Snapdragon/Adreno, <b>PanVK</b> for Mali. Real GPU acceleration for games/3D — but Chromium's GPU process can crash on either driver's syscalls, needing a launch-time workaround. Reach for these only if software rendering genuinely isn't enough.</p>
+        </article>
+      </div>
+
+      <span class="sub-kicker">Desktop Environment</span>
+      <div class="de-row glass rv">
+        <span class="de-name">XFCE4</span>
+        <span class="de-desc">Lightweight, familiar layout. Fastest and most stable option here — the recommended default for everyone.</span>
+        <span class="de-tags"><span class="chip chip-ok">~400 MB</span><span class="chip chip-ok">Recommended</span></span>
+      </div>
+      <div class="de-row glass rv">
+        <span class="de-name">LXQt</span>
+        <span class="de-desc">Lighter than XFCE4. Good pick if RAM is under 4 GB, though less polished and less broadly verified.</span>
+        <span class="de-tags"><span class="chip chip-ok">~300 MB</span><span class="chip chip-warn">Less-tested</span></span>
+      </div>
+      <div class="de-row glass rv">
+        <span class="de-name">MATE</span>
+        <span class="de-desc">Classic GNOME-2-style desktop. Its default file manager misbehaves in-container until swapped or disabled.</span>
+        <span class="de-tags"><span class="chip chip-warn">~500 MB</span><span class="chip chip-warn">Needs a fix</span></span>
+      </div>
+      <div class="de-row glass rv">
+        <span class="de-name">Cinnamon</span>
+        <span class="de-desc">Windows-like modern layout, heavier than XFCE4 and not yet broadly verified in this environment.</span>
+        <span class="de-tags"><span class="chip chip-warn">~800 MB</span><span class="chip chip-warn">Less-tested</span></span>
+      </div>
+      <div class="de-row glass rv">
+        <span class="de-name">KDE Plasma</span>
+        <span class="de-desc">Feature-rich and modern-looking. Only worth it on 8 GB+ RAM devices — otherwise it strains the container.</span>
+        <span class="de-tags"><span class="chip chip-heavy">~2 GB</span><span class="chip chip-heavy">Heavy</span></span>
+      </div>
+      <div class="de-row glass rv">
+        <span class="de-name">GNOME</span>
+        <span class="de-desc">The heaviest option, with known PRoot-specific issues that need workarounds. Experimental pick only.</span>
+        <span class="de-tags"><span class="chip chip-heavy">~2.5 GB</span><span class="chip chip-heavy">Buggy</span></span>
+      </div>
+
+      <span class="sub-kicker">Which One Should You Actually Pick?</span>
+      <div class="steps">
+        <article class="step glass rv">
+          <span class="num">1</span>
+          <div><h3>Just doing coursework?</h3><p>VS Code, a browser, PHP — use XFCE4 + LLVMPIPE and don't touch anything else.</p></div>
+        </article>
+        <article class="step glass rv">
+          <span class="num">2</span>
+          <div><h3>Need hardware acceleration for games/3D?</h3><p>Switch to Turnip (Snapdragon) or PanVK (Mali) — expect to need the Chromium workaround above.</p></div>
+        </article>
+        <article class="step glass rv">
+          <span class="num">3</span>
+          <div><h3>Want the most modern-looking desktop?</h3><p>KDE Plasma — but only on 8 GB+ RAM devices.</p></div>
+        </article>
+        <article class="step glass rv">
+          <span class="num">4</span>
+          <div><h3>Want the lightest possible footprint?</h3><p>LXQt instead of XFCE4.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="start" class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">Getting Started</span>
+        <h2>Board the Ark in minutes</h2>
+        <p>Install the APK, pick a distro, and launch your first desktop session.</p>
+      </div>
+      <div class="steps">
+        <article class="step glass rv">
+          <span class="num">1</span>
+          <div>
+            <h3>Install the APK</h3>
+            <p>Grab the latest release from GitHub, install it, and grant storage permissions. Requires Android 10 (API 29)+.</p>
+          </div>
+        </article>
+        <article class="step glass rv">
+          <span class="num">2</span>
+          <div>
+            <h3>Pick your distro &amp; update</h3>
+            <p>Select a distribution, start the container, and update package sources:</p>
+            <pre><code>apt update && apt upgrade -y</code></pre>
+          </div>
+        </article>
+        <article class="step glass rv">
+          <span class="num">3</span>
+          <div>
+            <h3>Install your desktop environment</h3>
+            <p>Choose an efficient desktop interface such as XFCE4 or Openbox for maximum smoothness:</p>
+            <pre><code>apt install xfce4 xfce4-terminal -y</code></pre>
+          </div>
+        </article>
+        <article class="step glass rv">
+          <span class="num">4</span>
+          <div>
+            <h3>Launch the session</h3>
+            <p>Start your display server and launch the desktop session:</p>
+            <pre><code>export DISPLAY=:0 && dbus-launch --exit-with-session xfce4-session &</code></pre>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="issues" class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">Field-Tested</span>
+        <h2>What to watch for</h2>
+        <p>Structural facts about running Linux in a PRoot container on Android — true for this category generally, not one device's bad luck.</p>
+      </div>
+      <div class="cards">
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+          <h3>GPU rendering</h3>
+          <p>Direct GPU access is typically blocked in-container. Software rendering (llvmpipe/lavapipe) is the reliable fallback — expected behavior, not a bug to chase.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
+          <h3>sudo / su elevation</h3>
+          <p>Some filesystems mount <code>nosuid</code>, and Android's own kernel sets <code>no_new_privs</code> on top — that second flag blocks elevation permanently, even with correct group membership. Workaround: <code>--no-sandbox</code> flags, or work as root directly.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <h3>musl vs. glibc</h3>
+          <p>Musl-based distros (Alpine, Chimera) can't run glibc-compiled binaries like Chromium or VS Code, even with every sandbox flag fixed. A hard limit, not a config problem.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></div>
+          <h3>Wine / Box64 / Steam</h3>
+          <p>Confirmed impossible on Android SDK 34+. Platform-level block, not something a config change works around.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-9-9c2.52 0 4.85.99 6.57 2.61M21 3v6h-6"/></svg></div>
+          <h3>Firefox &amp; OAuth redirects</h3>
+          <p>Firefox can crash on OAuth-style sign-ins (GitHub sign-in is a common trigger). Confirmed fix in <code>about:config</code>: set <code>security.sandbox.content.level</code> to <code>0</code> and <code>media.cubeb.sandbox</code> to <code>false</code>.</p>
+        </article>
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></div>
+          <h3>Package installs</h3>
+          <p><code>apt list --installed</code> can report everything as installed while some packages are actually still unconfigured underneath a big run. Trust <code>dpkg --audit</code> instead — if it reports anything, run <code>apt --fix-broken install</code>.</p>
+        </article>
+      </div>
+      <p style="text-align:center; margin-top:1.4rem; font-size:0.85rem; color:var(--ink-dim); max-width:42rem; margin-inline:auto;">
+        One pattern worth naming: if a fix keeps getting repeated as "confirmed working" across sessions but was never actually isolated and tested any of those times, that's not mounting evidence — it's the same untested guess recurring. Repetition isn't proof.
+      </p>
+    </section>
+
+    <section id="download" class="wrap">
+      <div class="dl-card glass rv">
+        <span class="kicker">Download</span>
+        <h2>Ready to set sail?</h2>
+        <p>Get the latest pre-built release package directly from GitHub.</p>
+        <a class="btn btn-primary" href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">&darr;&nbsp; Get the Latest Release</a>
+        <div class="req">
+          <span class="chip">Minimum <b>Android 10+</b></span>
+          <span class="chip">Architecture <b>arm64-v8a</b></span>
+          <span class="chip">License <b>Open Source</b></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="glass">
+        <p><b>XoDos-Ark</b> — Built with gratitude toward the open-source community: Termux, Termux-X11, and PRoot.</p>
+        <p class="foot-links">
+          <a href="https://github.com/xodiosx/XoDos-Ark" target="_blank" rel="noopener">GitHub</a> &bull;
+          <a href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">Releases</a> &bull;
+          <a href="https://github.com/xodiosx/XoDos-Ark#readme" target="_blank" rel="noopener">Documentation</a>
+        </p>
+        <p class="fine">"Bounded in a nutshell, yet king of infinite space."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
