@@ -178,7 +178,7 @@
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
           <h3>Avoid for general use</h3>
-          <p>Alpine, BusyBox, and anything else on musl libc — Chromium and VS Code won't run on them, full stop. OpenWRT and similarly special-purpose builds aren't for general desktop use either.</p>
+          <p>Alpine, BusyBox, and anything else on musl libc — glibc-dependent software (most Chromium-based browsers and Electron-based apps) won't run on them, full stop. OpenWRT and similarly special-purpose builds aren't for general desktop use either.</p>
         </article>
       </div>
       <p style="text-align:center; margin-top:1.2rem; font-size:0.85rem; color:var(--ink-dim);">
@@ -197,12 +197,12 @@
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
           <h3>Software — LLVMPIPE</h3>
-          <p>The universal default for both Vulkan and OpenGL. Runs on any device and handles coursework, browsing, and VS Code without issue. Start here — switch away only if you hit a specific need.</p>
+          <p>The universal default for both Vulkan and OpenGL. Runs on any device and handles coursework, browsing, and most Electron-based dev tools without issue. Start here — switch away only if you hit a specific need.</p>
         </article>
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
           <h3>Hardware — Turnip / PanVK</h3>
-          <p><b>Turnip</b> for Snapdragon/Adreno, <b>PanVK</b> for Mali. Real GPU acceleration for games/3D — but Chromium's GPU process can crash on either driver's syscalls, needing a launch-time workaround. Reach for these only if software rendering genuinely isn't enough.</p>
+          <p><b>Turnip</b> for Snapdragon/Adreno, <b>PanVK</b> for Mali. Real GPU acceleration for games/3D — but Chromium-based browsers and Electron-based apps can have their GPU process crash on either driver's syscalls, needing a launch-time workaround. Reach for these only if software rendering genuinely isn't enough.</p>
         </article>
       </div>
 
@@ -242,11 +242,11 @@
       <div class="steps">
         <article class="step glass rv">
           <span class="num">1</span>
-          <div><h3>Just doing coursework?</h3><p>VS Code, a browser, PHP — use XFCE4 + LLVMPIPE and don't touch anything else.</p></div>
+          <div><h3>Just doing coursework?</h3><p>An editor, a browser, server-side scripting — use XFCE4 + LLVMPIPE and don't touch anything else.</p></div>
         </article>
         <article class="step glass rv">
           <span class="num">2</span>
-          <div><h3>Need hardware acceleration for games/3D?</h3><p>Switch to Turnip (Snapdragon) or PanVK (Mali) — expect to need the Chromium workaround above.</p></div>
+          <div><h3>Need hardware acceleration for games/3D?</h3><p>Switch to Turnip (Snapdragon) or PanVK (Mali) — expect to need the browser/Electron launch workaround above.</p></div>
         </article>
         <article class="step glass rv">
           <span class="num">3</span>
@@ -315,22 +315,22 @@
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>
           <h3>sudo / su elevation</h3>
-          <p>Some filesystems mount <code>nosuid</code>, and Android's own kernel sets <code>no_new_privs</code> on top — that second flag blocks elevation permanently, even with correct group membership. Workaround: <code>--no-sandbox</code> flags, or work as root directly.</p>
+          <p>Some filesystems mount <code>nosuid</code>, and Android's own kernel sets <code>no_new_privs</code> on top — that second flag blocks elevation permanently, even with correct group membership. There's no flag fix for <code>sudo</code> itself here; work as root directly instead. The same <code>nosuid</code> restriction separately blocks the SUID sandbox that Chromium-based browsers and Electron-based apps rely on — for those specifically, launching with <code>--no-sandbox</code> is the actual workaround.</p>
         </article>
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
           <h3>musl vs. glibc</h3>
-          <p>Musl-based distros (Alpine, Chimera) can't run glibc-compiled binaries like Chromium or VS Code, even with every sandbox flag fixed. A hard limit, not a config problem.</p>
+          <p>Musl-based distros (Alpine, Chimera) can't run glibc-compiled binaries at all — that includes most Chromium-based browsers and Electron-based apps outright. No flag fixes this; it's a binary-compatibility wall, not a config problem.</p>
         </article>
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></div>
-          <h3>Wine / Box64 / Steam</h3>
-          <p>Confirmed impossible on Android SDK 34+. Platform-level block, not something a config change works around.</p>
+          <h3>Windows compatibility layers</h3>
+          <p>Tools that run Windows software on Linux (Wine and Box64 are typical examples) don't work on Android SDK 34+. It's a platform-level block, not something a config change works around.</p>
         </article>
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-9-9c2.52 0 4.85.99 6.57 2.61M21 3v6h-6"/></svg></div>
-          <h3>Firefox &amp; OAuth redirects</h3>
-          <p>Firefox can crash on OAuth-style sign-ins (GitHub sign-in is a common trigger). Confirmed fix in <code>about:config</code>: set <code>security.sandbox.content.level</code> to <code>0</code> and <code>media.cubeb.sandbox</code> to <code>false</code>.</p>
+          <h3>Browser tab crashes</h3>
+          <p>Sandboxed browsers can crash a tab during OAuth-style sign-in redirects. Firefox-based browsers are one example: setting <code>security.sandbox.content.level</code> to <code>0</code> in <code>about:config</code> resolves it there.</p>
         </article>
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></div>
