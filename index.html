@@ -150,7 +150,7 @@
       <div class="sec-head rv">
         <span class="kicker">Choosing Your Stack</span>
         <h2>Not every combination is equally proven</h2>
-        <p>Distro, desktop environment, and display server are independent choices — some pairings are field-tested, some are traps.</p>
+        <p>Distro, desktop environment, and display server are independent choices — and each distro family also ships its own package manager. Some pairings are field-tested, some are traps.</p>
       </div>
 
       <div class="dl-card glass rv" style="margin-bottom:1.5rem;">
@@ -163,17 +163,17 @@
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
           <h3>Tier 1 — Recommended</h3>
-          <p>Debian (trixie, bookworm), Ubuntu (noble). Predictable <code>apt</code>-based installs, best-documented behavior in this environment.</p>
+          <p>Debian (trixie, bookworm), Ubuntu (noble). Managed with <code>apt</code> — predictable installs, best-documented behavior in this environment.</p>
         </article>
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
           <h3>Tier 2 — Viable alternatives</h3>
-          <p>Arch (current), Fedora, AlmaLinux, RockyLinux, Devuan. Fine choices if you already know the family — just less-trodden ground here specifically.</p>
+          <p>Arch (current, <code>pacman</code>), Fedora, AlmaLinux, RockyLinux (<code>dnf</code>), Devuan (<code>apt</code>). Fine choices if you already know the family — just less-trodden ground here specifically.</p>
         </article>
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
           <h3>Tier 3 — Special purpose</h3>
-          <p>Kali NetHunter, OpenSUSE, NixOS. Real use cases, but not general beginner setups — pick these only if you already know why you need them.</p>
+          <p>Kali NetHunter (<code>apt</code>), OpenSUSE (<code>zypper</code>), NixOS (declarative <code>nix</code>). Real use cases, but not general beginner setups — pick these only if you already know why you need them.</p>
         </article>
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
@@ -276,28 +276,68 @@
         <article class="step glass rv">
           <span class="num">2</span>
           <div>
-            <h3>Pick your distro &amp; update</h3>
-            <p>Select a distribution, start the container, and update package sources:</p>
-            <pre><code>apt update && apt upgrade -y</code></pre>
+            <h3>Update with that distro's own package manager</h3>
+            <p>There is no universal package manager — each family has its own tool, format, and repository index, and none of them read another's packages. Run the upgrade command for whichever you installed:</p>
+            <div class="pkg-list">
+              <div class="pkg">
+                <span class="pkg-name">apt<span class="mgr">Debian &bull; Ubuntu &bull; Kali &bull; Devuan</span></span>
+                <div class="pkg-cmds"><div class="pkg-cmd"><span class="cmd-l">upgrade</span><code>apt update &amp;&amp; apt upgrade -y</code></div></div>
+              </div>
+              <div class="pkg">
+                <span class="pkg-name">dnf<span class="mgr">Fedora &bull; AlmaLinux &bull; RockyLinux</span></span>
+                <div class="pkg-cmds"><div class="pkg-cmd"><span class="cmd-l">upgrade</span><code>dnf upgrade -y</code></div></div>
+              </div>
+              <div class="pkg">
+                <span class="pkg-name">pacman<span class="mgr">Arch &bull; Manjaro</span></span>
+                <div class="pkg-cmds"><div class="pkg-cmd"><span class="cmd-l">upgrade</span><code>pacman -Syu</code></div></div>
+              </div>
+              <div class="pkg">
+                <span class="pkg-name">zypper<span class="mgr">openSUSE Leap &bull; Tumbleweed</span></span>
+                <div class="pkg-cmds"><div class="pkg-cmd"><span class="cmd-l">upgrade</span><code>zypper refresh &amp;&amp; zypper update -y</code></div></div>
+              </div>
+            </div>
+            <span class="quote">Run everything as root — that's already the default inside the container, and elevation through <code>sudo</code> is blocked here anyway (see Known Issues). Always a full upgrade (<code>-Syu</code>, not a bare <code>-Sy</code>): partial upgrades leave mismatched libraries behind.</span>
           </div>
         </article>
         <article class="step glass rv">
           <span class="num">3</span>
           <div>
             <h3>Install your desktop environment</h3>
-            <p>Choose an efficient desktop interface such as XFCE4 or Openbox for maximum smoothness:</p>
-            <pre><code>apt install xfce4 xfce4-terminal -y</code></pre>
+            <p>The same desktop is packaged differently per family — as individual packages, as a group, or as a pattern. The commands below all install an XFCE4 desktop:</p>
+            <div class="pkg-list">
+              <div class="pkg">
+                <span class="pkg-name">apt<span class="mgr">Debian &bull; Ubuntu &bull; Kali</span></span>
+                <div class="pkg-cmds"><div class="pkg-cmd"><span class="cmd-l">install</span><code>apt install xfce4 xfce4-terminal -y</code></div></div>
+              </div>
+              <div class="pkg">
+                <span class="pkg-name">dnf<span class="mgr">Fedora &bull; AlmaLinux &bull; RockyLinux</span></span>
+                <div class="pkg-cmds"><div class="pkg-cmd"><span class="cmd-l">install</span><code>dnf group install "Xfce Desktop"</code></div></div>
+              </div>
+              <div class="pkg">
+                <span class="pkg-name">pacman<span class="mgr">Arch &bull; Manjaro</span></span>
+                <div class="pkg-cmds"><div class="pkg-cmd"><span class="cmd-l">install</span><code>pacman -S xfce4 xfce4-terminal</code></div></div>
+              </div>
+              <div class="pkg">
+                <span class="pkg-name">zypper<span class="mgr">openSUSE Leap &bull; Tumbleweed</span></span>
+                <div class="pkg-cmds"><div class="pkg-cmd"><span class="cmd-l">install</span><code>zypper install -t pattern xfce4</code></div></div>
+              </div>
+            </div>
+            <span class="quote">Group and pattern names are not standardized across distros or versions — list the available ones with <code>dnf group list</code> or <code>zypper patterns</code>, and if a package name isn't found, search before assuming the desktop is unavailable: <code>apt search</code>, <code>dnf search</code>, <code>pacman -Ss</code>, <code>zypper se</code>.</span>
           </div>
         </article>
         <article class="step glass rv">
           <span class="num">4</span>
           <div>
             <h3>Launch the session</h3>
-            <p>Start your display server and launch the desktop session:</p>
+            <p>With X11 selected under <b>Settings &rarr; Display</b>, start your display server and launch the desktop session:</p>
             <pre><code>export DISPLAY=:0 && dbus-launch --exit-with-session xfce4-session &</code></pre>
+            <span class="quote">That last binary is XFCE-specific — swap it for your desktop: <code>startplasma-x11</code> (KDE), <code>lxqt-session</code>, <code>mate-session</code>, <code>gnome-session</code>. The <code>dbus-launch</code> wrapper stays the same on all of them.</span>
           </div>
         </article>
       </div>
+      <p style="text-align:center; margin-top:1.4rem; font-size:0.85rem; color:var(--ink-dim); max-width:42rem; margin-inline:auto;">
+        Two outliers worth naming: Alpine and the rest of the musl family use <code>apk</code> and otherwise follow the same flow — but musl is a hard compatibility wall for most desktop software (see Known Issues). NixOS has no install or upgrade commands at all: it is declarative, driven by <code>configuration.nix</code> plus <code>nixos-rebuild</code>, and expects an init system a PRoot container doesn't provide.
+      </p>
     </section>
 
     <section id="issues" class="wrap">
@@ -335,7 +375,7 @@
         <article class="card glass rv">
           <div class="icon" aria-hidden="true"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></div>
           <h3>Package installs</h3>
-          <p><code>apt list --installed</code> can report everything as installed while some packages are actually still unconfigured underneath a big run. Trust <code>dpkg --audit</code> instead — if it reports anything, run <code>apt --fix-broken install</code>.</p>
+          <p>A manager's list view can report every package as installed while some are still unconfigured underneath a big run. Trust that manager's own consistency check instead — <code>dpkg --audit</code> (Debian family, fix with <code>apt --fix-broken install</code>), <code>pacman -Dk</code> (Arch), <code>dnf check</code> (Fedora/RHEL), or <code>zypper verify</code> (openSUSE). If any of them report a problem, fix it before installing more.</p>
         </article>
       </div>
       <p style="text-align:center; margin-top:1.4rem; font-size:0.85rem; color:var(--ink-dim); max-width:42rem; margin-inline:auto;">
