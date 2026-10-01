@@ -1,15 +1,69 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080512">
+  <meta name="description" content="XoDos-Ark is a native Android app that wraps the XoDos emulator in a secure container.">
+  <title>XoDos-Ark — One Ship. Every System. No Limits.</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <h3>Disable child process restrictions</h3>
-<p><b>Settings → About Phone →</b> tap Build Number 7× <b>→ Developer Options →</b> "Disable child process restrictions." Android 12+ kills an app's spawned processes past a threshold, and installing packages spawns one per operation — without this toggle, installs can die silently partway through.</p>
-</body>
+  <div class="bg" aria-hidden="true">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="grid"></div>
+  </div>
 
+  <nav aria-label="Primary navigation">
+    <div class="nav-inner glass">
+      <a class="brand" href="#top" aria-label="XoDos-Ark home">
+        <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <circle cx="32" cy="32" r="29" stroke="#8b5cf6" stroke-width="3"/>
+          <path d="M32 14c10 0 18 8 18 18s-8 18-18 18-18-8-18-18" stroke="#c4b5fd" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="32" cy="32" r="5" fill="#8b5cf6"/>
+        </svg>
+        <span>XoDos-Ark</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links" id="navMenu">
+        <a href="#features">Features</a>
+        <a href="#prereqs">Prerequisites</a>
+        <a href="#start">Get Started</a>
+        <a href="#issues">Known Issues</a>
+        <a class="btn btn-primary" href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">Download APK</a>
+      </div>
+    </div>
+  </nav>
+
+  
+    <section id="features" class="wrap">
+      <div class="sec-head rv">
+        <span class="kicker">HOW TO DISABLE THE PHANTOM PROCESSER KILLER ? </span>
+        <h2>Disable child process restrictions</h2>
+        <h5>BUT THIS IS ONLY FOR THE ANDROID 14 && 14+</h5>
+      </div>
+      <div class="cards">
+      
+
+        <article class="card glass rv">
+          <div class="icon" aria-hidden="true">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+          </div>
+          <h3>Go to your Phone settings and follow below steps : </h3>
+          <p>Settings → About Phone → tap Build Number 7× → Developer Options → "Disable child process restrictions." Android 12+ kills an app's spawned processes past a threshold, and installing packages spawns one per operation — without this toggle, installs can die silently partway through.</p>
+        </article>
+
+      
+      </div>
+    </section>
+
+  
+
+  <script src="main.js" defer></script>
+</body>
 </html>
