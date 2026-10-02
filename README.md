@@ -16,5 +16,4 @@ guys we have to remove the filed test section in current ark and then edit the  
 4) donate .
 -------------------------------------------
 1) to add the copy button in phatom.html to copy a command 
-
-2) to host a video and then add that video in in phatom.html instead of hosting in the youtube 
+ 
