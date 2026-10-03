@@ -7,5 +7,3 @@
 3) community
 4) donate .
 -------------------------------------------
-1) to add the copy button in phatom.html to copy a command 
- 
