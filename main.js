@@ -57,4 +57,38 @@
   document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') closeMenu();
   });
+
+  // 4. Copy the Android command without exposing it in the URL or page state.
+  var copyButton = document.getElementById('copyCommand');
+  var command = document.getElementById('phantomCommand');
+  if (copyButton && command) {
+    copyButton.addEventListener('click', function() {
+      var text = command.textContent.trim();
+      var copied = function() {
+        copyButton.classList.add('is-copied');
+        copyButton.querySelector('span').textContent = 'Copied';
+        window.setTimeout(function() {
+          copyButton.classList.remove('is-copied');
+          copyButton.querySelector('span').textContent = 'Copy';
+        }, 1800);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(copied).catch(function() {});
+      } else {
+        var helper = document.createElement('textarea');
+        helper.value = text;
+        helper.setAttribute('readonly', '');
+        helper.style.position = 'fixed';
+        helper.style.opacity = '0';
+        document.body.appendChild(helper);
+        helper.select();
+        try {
+          if (document.execCommand('copy')) copied();
+        } finally {
+          document.body.removeChild(helper);
+        }
+      }
+    });
+  }
 })();
