@@ -15,3 +15,7 @@ ALSO we have to add a page that explain user what's the linux , distro, environm
 app 
 
 ALSO THIS TOO if possible let us divide the installation video of XODIOS for ark so usr can follow step easly or make new INSTALLION video in very easy laungage 
+
+ALSO 👇🏻
+
+<img src="also-changes-we-have-to-make-website.jpg" alt="" width="500" align="center">
