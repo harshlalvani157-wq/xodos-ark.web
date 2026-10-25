@@ -19,3 +19,6 @@ ALSO THIS TOO if possible let us divide the installation video of XODIOS for ark
 ALSO 👇🏻
 
 <img src="also-changes-we-have-to-make-website.jpg" alt="" width="500" align="center">
+
+
+ALSO we have to rewrite some part of website to make perfect because there aren't correct info for some part 
