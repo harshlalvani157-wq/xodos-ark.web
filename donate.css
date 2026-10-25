@@ -1,0 +1,23 @@
+/* ===== DONATE SECTION - paste at the END of style.css ===== */
+#donate{--dp:#8b5cf6;--dp2:#c4b5fd}
+#donate .dn-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+#donate .dn-card{display:flex;flex-direction:column;gap:12px;padding:24px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(139,92,246,.28);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+#donate .dn-card h3{margin:0;font-size:1.15rem}
+#donate .dn-card p{margin:0;opacity:.8;line-height:1.55;font-size:.95rem}
+#donate .dn-tag{align-self:flex-start;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--dp2);border:1px solid rgba(196,181,253,.35);padding:3px 10px;border-radius:99px}
+#donate .dn-copy{display:flex;gap:8px;align-items:center;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 8px 8px 14px}
+#donate .dn-copy code{flex:1;min-width:0;overflow-wrap:anywhere;font-size:.82rem;color:var(--dp2)}
+#donate .dn-copy button{border:0;cursor:pointer;color:#fff;background:var(--dp);border-radius:9px;padding:8px 14px;font:inherit;font-size:.82rem;font-weight:600}
+#donate .dn-copy button.done{background:#10b981}
+#donate .dn-label{font-size:.75rem;opacity:.6;margin-bottom:-6px}
+#donate .dn-qr{align-self:center;width:150px;height:150px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden}
+#donate .dn-qr img{max-width:100%;max-height:100%}
+#donate .dn-qr span{display:none;color:#555;font-size:.75rem;text-align:center;padding:10px}
+#donate .dn-qr.empty span{display:block}
+#donate .dn-qr.empty img{display:none}
+#donate .dn-card .btn{text-align:center;margin-top:auto}
+#donate .dn-why{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+#donate .dn-why span{padding:8px 16px;border-radius:99px;font-size:.88rem;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3)}
+#donate .dn-free{margin-top:26px;text-align:center}
+#donate .dn-free p{opacity:.8;margin:0 0 14px}
+#donate .dn-free .row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
