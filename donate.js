@@ -1,0 +1,2 @@
+/* ===== DONATE SECTION - paste at the END of main.js ===== */
+document.querySelectorAll('#donate [data-copy]').forEach(function(b){b.addEventListener('click',async function(){var t=b.dataset.copy;try{await navigator.clipboard.writeText(t)}catch(e){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(_){}a.remove()}var o=b.textContent;b.textContent='Copied \u2713';b.classList.add('done');setTimeout(function(){b.textContent=o;b.classList.remove('done')},1600)})});
