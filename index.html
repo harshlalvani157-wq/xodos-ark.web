@@ -31,6 +31,7 @@
 <a href="#features">Features</a>
 <a href="#prereqs">Prerequisites</a>
 <a href="#start">Get Started</a>
+<a href="#contributors">Contributors</a>
 <a href="#community">Community</a>
 <a href="#donate">Donation</a>
 <a class="btn btn-primary" href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">Download APK</a>
@@ -222,6 +223,7 @@
 </a>
 </div>
 </section>
+
 <section id="donate" class="wrap">
 <style>
 #donate{--dp:#8b5cf6;--dp2:#c4b5fd}
@@ -296,6 +298,47 @@
 document.querySelectorAll('#donate [data-copy]').forEach(function(b){b.addEventListener('click',async function(){var t=b.dataset.copy;try{await navigator.clipboard.writeText(t)}catch(e){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(_){}a.remove()}var o=b.textContent;b.textContent='Copied \u2713';b.classList.add('done');setTimeout(function(){b.textContent=o;b.classList.remove('done')},1600)})});
 </script>
 </section>
+
+<section id="contributors" class="wrap contributors-section">
+  <div class="sec-head rv">
+    <span class="kicker">THE PEOPLE BEHIND THE ARK</span>
+    <h2>Every commit has a story.</h2>
+    <p>Built in the open, made better by the people who keep showing up.</p>
+  </div>
+
+  <div class="contributors-panel glass rv">
+    <div class="contributors-panel__glow" aria-hidden="true"></div>
+    <div class="contributors-topbar" aria-hidden="true">
+      <div class="contributors-window-dots"><i></i><i></i><i></i></div>
+      <span class="contributors-window-title">xodos-ark / contributors</span>
+      <span class="contributors-window-mark">● PUBLIC</span>
+    </div>
+
+    <div class="contributors-console">
+      <div class="contributors-command"><span class="contributors-prompt">root@ark:~$</span> git log --contributors</div>
+      <div class="contributors-meta">
+        <span class="contributors-live-dot" aria-hidden="true"></span>
+        <span data-contributor-status role="status" aria-live="polite">Loading GitHub contributor graph…</span>
+        <span class="contributors-count" data-contributor-count>— people</span>
+      </div>
+    </div>
+
+    <div class="contributors-viewport" aria-label="XoDos-Ark contributors">
+      <div class="contributors-track" data-contributor-track>
+        <div class="contributors-track__group" data-contributor-group>
+          <div class="contributors-loading">Fetching the people behind the commits…</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contributors-bottomline">
+      <span><span class="contributors-prompt">&gt;_</span> Open source is a team sport.</span>
+      <a href="https://github.com/xodiosx/XoDos-Ark/graphs/contributors" target="_blank" rel="noopener">View contributor graph <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+  <p class="contributors-note">Contributor profiles open on GitHub. The roster is read from the public XoDos-Ark repository.</p>
+</section>
+
 </main>
 <footer>
 <div class="wrap">
@@ -304,12 +347,4 @@ document.querySelectorAll('#donate [data-copy]').forEach(function(b){b.addEventL
 <p class="foot-links">
 <a href="https://github.com/xodiosx/XoDos-Ark" target="_blank" rel="noopener">GitHub</a> &bull;
 <a href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">Releases</a> &bull;
-<a href="https://github.com/xodiosx/XoDos-Ark#readme" target="_blank" rel="noopener">Documentation</a>
-</p>
-<p class="fine">"Bounded in a nutshell, yet king of infinite space."</p>
-</div>
-</div>
-</footer>
-<script src="main.js" defer></script>
-</body>
-</html>
+<a href="https://github.com/xodiosx/XoDos-Ark#readme" target="_blank" rel="noopener">Doc
