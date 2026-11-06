@@ -127,7 +127,7 @@
     { login: 'Smithy1976', label: 'Project contributor' },
     { login: 'KarysDeveloper', label: 'Project contributor' },
     { login: 'mebabo1', label: 'Project contributor' },
-    { name: 'Theames', avatar_url: 'assets/contributors/theames-discord.png', url: 'https://discord.gg/d2ChVhPfnF', label: 'Discord community' }
+    { name: 'Theames', avatar_url: 'assets/theames-discord.png', url: 'https://discord.gg/d2ChVhPfnF', label: 'Discord community' }
   ];
 
   function mergeContributors(users) {
