@@ -1046,3 +1046,307 @@ footer a {
     transform: none;
   }
 }
+
+
+/* ==========================================================================\
+   XODOS-ARK CONTRIBUTORS — native purple optical-glass treatment
+   Uses the existing root palette, glass gradient, lens shadow and radius.
+   ========================================================================== */
+.contributors-section {
+  padding-top: clamp(2rem, 7vw, 3.5rem);
+}
+
+.contributors-panel {
+  --contributors-border: rgba(196, 181, 253, 0.2);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 60rem;
+  margin-inline: auto;
+  padding: clamp(0.9rem, 3vw, 1.45rem);
+  border-radius: calc(var(--radius) + 0.25rem);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-stroke);
+  border-top-color: var(--glass-stroke-top);
+  box-shadow: var(--lens-shadow);
+  backdrop-filter: blur(9px) saturate(145%);
+  -webkit-backdrop-filter: blur(9px) saturate(145%);
+}
+
+.contributors-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 65% 55% at 50% -12%, rgba(196, 181, 253, 0.15), transparent 72%),
+    radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.12), transparent 48%);
+}
+
+.contributors-panel__glow {
+  position: absolute;
+  z-index: -1;
+  width: 19rem;
+  height: 19rem;
+  right: -8rem;
+  top: -12rem;
+  border-radius: 50%;
+  background: rgba(139, 92, 246, 0.17);
+  filter: blur(48px);
+  pointer-events: none;
+}
+
+.contributors-topbar {
+  display: flex;
+  align-items: center;
+  min-height: 2.2rem;
+  gap: 0.8rem;
+  padding: 0.1rem 0.2rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.contributors-window-dots {
+  display: flex;
+  gap: 0.38rem;
+  flex: none;
+}
+
+.contributors-window-dots i {
+  display: block;
+  width: 0.58rem;
+  height: 0.58rem;
+  border-radius: 50%;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.32), 0 0 9px currentColor;
+}
+.contributors-window-dots i:nth-child(1) { color: #ff6b6b; background: #ff6b6b; }
+.contributors-window-dots i:nth-child(2) { color: #f6c85f; background: #f6c85f; }
+.contributors-window-dots i:nth-child(3) { color: #42d69b; background: #42d69b; }
+
+.contributors-window-title {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink-dim);
+  font: 0.72rem var(--mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contributors-window-mark {
+  margin-left: auto;
+  flex: none;
+  color: #6ee7b7;
+  font: 700 0.62rem var(--mono);
+  letter-spacing: 0.08em;
+}
+
+.contributors-console {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  padding: 1.05rem 0.2rem 1rem;
+}
+
+.contributors-command {
+  min-width: 0;
+  color: #f8f7fc;
+  font: 500 clamp(0.76rem, 2.6vw, 0.9rem) var(--mono);
+  overflow-wrap: anywhere;
+}
+
+.contributors-prompt { color: var(--violet-soft); }
+
+.contributors-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--ink-dim);
+  font: 0.67rem var(--mono);
+}
+
+.contributors-live-dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.85);
+}
+
+.contributors-count {
+  margin-left: 0.2rem;
+  padding: 0.22rem 0.55rem;
+  color: var(--violet-soft);
+  border: 1px solid rgba(196, 181, 253, 0.2);
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.09);
+  white-space: nowrap;
+}
+
+.contributors-viewport {
+  position: relative;
+  overflow: hidden;
+  padding-block: 0.95rem 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.075);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.contributors-track {
+  display: flex;
+  width: max-content;
+  animation: ark-contributors-marquee 52s linear infinite;
+  will-change: transform;
+}
+
+.contributors-panel:hover .contributors-track,
+.contributors-panel:focus-within .contributors-track {
+  animation-play-state: paused;
+}
+
+.contributors-track__group {
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  gap: clamp(1.2rem, 3.5vw, 2.35rem);
+  padding-inline: clamp(0.8rem, 2.4vw, 1.4rem);
+}
+
+.contributors-person {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  width: clamp(5.2rem, 14vw, 7rem);
+  text-align: center;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 1rem;
+  outline-offset: 5px;
+}
+
+.contributors-person:focus-visible {
+  outline: 2px solid var(--violet-soft);
+}
+
+.contributors-avatar-shell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(3.65rem, 10vw, 4.65rem);
+  aspect-ratio: 1;
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #e9ddff 0%, #9a75f7 38%, rgba(139, 92, 246, 0.2) 100%);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.13), 0 7px 24px rgba(74, 35, 156, 0.27), inset 0 1px 1px rgba(255,255,255,.5);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.contributors-person:hover .contributors-avatar-shell,
+.contributors-person:focus-visible .contributors-avatar-shell {
+  transform: translateY(-4px) scale(1.07);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.24), 0 0 24px var(--violet-glow), 0 9px 28px rgba(74, 35, 156, 0.38);
+}
+
+.contributors-avatar-shell img,
+.contributors-avatar-fallback {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(9, 5, 20, 0.92);
+  background: linear-gradient(135deg, #251544, #100a20);
+}
+
+.contributors-avatar-fallback {
+  display: grid;
+  place-items: center;
+  color: var(--violet-soft);
+  font: 700 1rem var(--mono);
+}
+
+.contributors-name {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  color: #f8f7fc;
+  font-size: 0.76rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contributors-commits {
+  display: block;
+  margin-top: -0.38rem;
+  color: var(--ink-dim);
+  font: 0.62rem var(--mono);
+}
+
+.contributors-loading {
+  padding: 1.6rem 1rem;
+  color: var(--ink-dim);
+  font: 0.76rem var(--mono);
+  white-space: nowrap;
+}
+
+.contributors-bottomline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.95rem 0.2rem 0.1rem;
+  color: var(--ink-dim);
+  font: 0.68rem var(--mono);
+}
+
+.contributors-bottomline a {
+  color: var(--violet-soft);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.contributors-bottomline a:hover { color: #fff; }
+.contributors-note {
+  margin: 0.8rem auto 0;
+  max-width: 60rem;
+  color: var(--ink-dim);
+  opacity: 0.72;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+@keyframes ark-contributors-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (max-width: 36rem) {
+  .contributors-panel { padding: 0.78rem; }
+  .contributors-topbar { gap: 0.55rem; }
+  .contributors-window-mark { font-size: 0.56rem; }
+  .contributors-console { align-items: flex-start; flex-direction: column; gap: 0.55rem; padding-block: 0.85rem; }
+  .contributors-meta { font-size: 0.62rem; }
+  .contributors-track { animation-duration: 42s; }
+  .contributors-track__group { gap: 1rem; }
+  .contributors-person { width: 5.1rem; }
+  .contributors-avatar-shell { width: 3.55rem; }
+  .contributors-name { font-size: 0.7rem; }
+  .contributors-bottomline { font-size: 0.62rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contributors-viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+  .contributors-track { animation: none; will-change: auto; }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .contributors-panel { background: rgba(22, 14, 40, 0.96); }
+}
