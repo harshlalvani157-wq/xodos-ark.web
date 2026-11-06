@@ -112,7 +112,7 @@
   var CACHE_KEY = 'xodos-ark-contributors-v1';
   var CACHE_TTL = 6 * 60 * 60 * 1000;
   var coreTeam = [
-    { login: 'xodiosx', contributions: null },
+    { login: 'xodiosx', contributions: null, label: 'Leader'},
     { login: 'Karysdeveloper', contributions: null },
     { login: 'Mondo67244', contributions: null },
     { login: 'jiaxinchen-max', contributions: null },
