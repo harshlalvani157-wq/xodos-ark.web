@@ -108,16 +108,16 @@
   var count = section.querySelector('[data-contributor-count]');
   if (!track || !status || !count) return;
 
-  //var API = 'https://api.github.com/repos/xodiosx/XoDos-Ark/contributors?per_page=100';
-  //var CACHE_KEY = 'xodos-ark-contributors-v1';
- // var CACHE_TTL = 6 * 60 * 60 * 1000;
- // var coreTeam = [
+  var API = 'https://api.github.com/repos/xodiosx/XoDos-Ark/contributors?per_page=100';
+  var CACHE_KEY = 'xodos-ark-contributors-v1';
+  var CACHE_TTL = 6 * 60 * 60 * 1000;
+  var coreTeam = [
   //  { login: 'xodiosx', contributions: null, label: 'Leader'},
     //{ login: 'Karysdeveloper', contributions: null },
 //    { login: 'Mondo67244', contributions: null },
    // { login: 'jiaxinchen-max', contributions: null },
  //   { login: 'Snap888', contributions: null }
- // ];
+ ];
 
   // Community members supplied by the project owner. These stay visible even
   // when they have not made a commit to the repository yet.
