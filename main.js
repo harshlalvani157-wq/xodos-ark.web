@@ -108,20 +108,22 @@
   var count = section.querySelector('[data-contributor-count]');
   if (!track || !status || !count) return;
 
-  var API = 'https://api.github.com/repos/xodiosx/XoDos-Ark/contributors?per_page=100';
-  var CACHE_KEY = 'xodos-ark-contributors-v1';
-  var CACHE_TTL = 6 * 60 * 60 * 1000;
-  var coreTeam = [
-    { login: 'xodiosx', contributions: null, label: 'Leader'},
-    { login: 'Karysdeveloper', contributions: null },
-    { login: 'Mondo67244', contributions: null },
-    { login: 'jiaxinchen-max', contributions: null },
-    { login: 'Snap888', contributions: null }
-  ];
+  //var API = 'https://api.github.com/repos/xodiosx/XoDos-Ark/contributors?per_page=100';
+  //var CACHE_KEY = 'xodos-ark-contributors-v1';
+ // var CACHE_TTL = 6 * 60 * 60 * 1000;
+ // var coreTeam = [
+  //  { login: 'xodiosx', contributions: null, label: 'Leader'},
+    //{ login: 'Karysdeveloper', contributions: null },
+//    { login: 'Mondo67244', contributions: null },
+   // { login: 'jiaxinchen-max', contributions: null },
+ //   { login: 'Snap888', contributions: null }
+ // ];
 
   // Community members supplied by the project owner. These stay visible even
   // when they have not made a commit to the repository yet.
   var featuredContributors = [
+    { login: 'xodiosx' , label: 'LEADER' },
+    { login: 'tanmaysoren' , label: 'Project contributor' },
     { login: 'harshlalvani157-wq', label: 'Project contributor' },
     { login: 'tokokudo', label: 'Project contributor' },
     { login: 'Smithy1976', label: 'Project contributor' },
@@ -129,7 +131,8 @@
     { login: 'mebabo1', label: 'Project contributor' },
     { name: 'Theames', avatar_url: 'assets/contributors/theames-discord.png', url: 'https://discord.gg/d2ChVhPfnF', label: 'project contributor' },
     { login: 'CosmyBeyondStars', label:'project contributor' },
-    { login: 'Beauty114514', label:'project contributor'}
+    { login: 'Beauty114514', label:'project contributor'},
+    { login: 'KianoRoku18Ino' , label:'project contributor'}
   ];
 
   function mergeContributors(users) {
