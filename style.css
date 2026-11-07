@@ -183,10 +183,27 @@ nav {
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
 }
 
-.brand svg {
-  width: 1.65rem;
-  height: 1.65rem;
-  filter: drop-shadow(0 0 6px var(--violet-glow));
+.brand-logo {
+  display: block;
+  width: 2.25px;
+  height: 2.25px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.42));
+}
+
+@media (max-width: 36rem) {
+  .brand-logo {
+    width: 2.85rem;
+    height: 2.85rem;
+  }
+  .brand {
+    gap: 0.55rem;
+    padding-inline: 0.7rem;
+  }
 }
 
 .brand span {
@@ -369,9 +386,6 @@ nav {
   opacity: 0.85;
 }
 
-/* ==========================================================================
-   CARDS WITH MAGNIFYING OPTICAL GLASS
-   ========================================================================== */
 section {
   padding-block: clamp(2.2rem, 8vw, 4rem);
 }
@@ -402,9 +416,6 @@ section {
   font-size: 0.95rem;
 }
 
-/* ============================================================================
-   YOUTUBE DEMO
-   ============================================================================ */
 .video-section {
   padding-top: clamp(2rem, 7vw, 3.5rem);
 }
@@ -586,7 +597,6 @@ section {
   color: var(--violet-soft);
   opacity: 0.85;
 }
-
 /* ==========================================================================
    STEPS & TERMINAL
    ========================================================================== */
@@ -799,6 +809,10 @@ pre code {
   color: var(--ink);
 }
 
+.chip-ok   { color: #34d399; border-color: rgba(52, 211, 153, 0.35); }
+.chip-warn { color: #f59e0b; border-color: rgba(245, 158, 11, 0.35); }
+.chip-heavy{ color: #fb7185; border-color: rgba(251, 113, 133, 0.35); }
+
 /* ============================================================================
    COMMUNITY
    ============================================================================ */
@@ -872,13 +886,6 @@ pre code {
   transform: scale(1.1) translateY(-2px);
 }
 
-
-/* Status-chip variants — same glass base as .chip, just a colored
-   accent so a stack choice reads as good/caution/heavy at a glance. */
-.chip-ok   { color: #34d399; border-color: rgba(52, 211, 153, 0.35); }
-.chip-warn { color: #f59e0b; border-color: rgba(245, 158, 11, 0.35); }
-.chip-heavy{ color: #fb7185; border-color: rgba(251, 113, 133, 0.35); }
-
 /* Compact one-line-per-option rows — used for the Desktop
    Environment list, where six full cards would be too much scroll
    for what's really just a name + verdict + a couple of tags. */
@@ -920,7 +927,6 @@ pre code {
   color: var(--violet-soft);
   margin: 2.4rem 0 0.5rem;
 }
-
 /* ==========================================================================
    FOOTER
    ========================================================================== */
@@ -1046,9 +1052,7 @@ footer a {
     transform: none;
   }
 }
-
-
-/* ==========================================================================\
+/* ==========================================================================
    XODOS-ARK CONTRIBUTORS — native purple optical-glass treatment
    Uses the existing root palette, glass gradient, lens shadow and radius.
    ========================================================================== */
@@ -1120,6 +1124,7 @@ footer a {
   border-radius: 50%;
   box-shadow: inset 0 1px 1px rgba(255,255,255,.32), 0 0 9px currentColor;
 }
+
 .contributors-window-dots i:nth-child(1) { color: #ff6b6b; background: #ff6b6b; }
 .contributors-window-dots i:nth-child(2) { color: #f6c85f; background: #f6c85f; }
 .contributors-window-dots i:nth-child(3) { color: #42d69b; background: #42d69b; }
@@ -1279,9 +1284,7 @@ footer a {
   color: #f8f7fc;
   font-size: 0.76rem;
   font-weight: 650;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  text-overflow: ellipsis;}
 
 .contributors-commits {
   display: block;
@@ -1313,7 +1316,11 @@ footer a {
   text-decoration: none;
   transition: color 0.2s ease;
 }
-.contributors-bottomline a:hover { color: #fff; }
+
+.contributors-bottomline a:hover {
+  color: #fff;
+}
+
 .contributors-note {
   margin: 0.8rem auto 0;
   max-width: 60rem;
@@ -1332,7 +1339,12 @@ footer a {
   .contributors-panel { padding: 0.78rem; }
   .contributors-topbar { gap: 0.55rem; }
   .contributors-window-mark { font-size: 0.56rem; }
-  .contributors-console { align-items: flex-start; flex-direction: column; gap: 0.55rem; padding-block: 0.85rem; }
+  .contributors-console {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding-block: 0.85rem;
+  }
   .contributors-meta { font-size: 0.62rem; }
   .contributors-track { animation-duration: 42s; }
   .contributors-track__group { gap: 1rem; }
@@ -1343,10 +1355,19 @@ footer a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contributors-viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
-  .contributors-track { animation: none; will-change: auto; }
+  .contributors-viewport {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  .contributors-track {
+    animation: none;
+    will-change: auto;
+  }
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .contributors-panel { background: rgba(22, 14, 40, 0.96); }
+  .contributors-panel {
+    background: rgba(22, 14, 40, 0.96);
+  }
 }
