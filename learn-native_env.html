@@ -8,6 +8,29 @@
 <title>Learn Native Environment — XoDos-Ark</title>
 <link rel="stylesheet" href="style.css">
 <style>
+/* nav bar ark logo design*/
+.brand-logo-ark{
+  display: block;
+  width: 2.25px;
+  height: 2.25px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.42));
+}
+
+@media (max-width: 36rem) {
+  .brand-logo-ark {
+    width: 2.85rem;
+    height: 2.85rem;
+  }
+}
+
+
+
+
 /* Page-specific styles; the site's existing purple glass design remains in style.css. */
 .learn-hero { padding: clamp(2.4rem, 8vw, 4.5rem) 0 1.5rem; text-align:center; }
 .learn-hero h1 { margin:.8rem auto; max-width: 52rem; font-size:clamp(2rem,7vw,3.5rem); line-height:1.08; letter-spacing:-.045em; }
@@ -52,6 +75,26 @@
 .note { border-left:3px solid #a78bfa; padding:.8rem 1rem; color:var(--ink-dim); background:rgba(139,92,246,.08); border-radius:0 .7rem .7rem 0; font-size:.84rem; }
 @media(min-width:48rem){.learn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.learn-grid .wide{grid-column:1/-1}.terminal-screen{min-height:20rem}}
 @media(max-width:35rem){.terminal-form{gap:.35rem;padding:.7rem}.terminal-form button{padding:.5rem .65rem}.terminal-screen{font-size:.72rem}}
+
+.lesson-tabs{display:flex;flex-wrap:wrap;gap:.55rem;margin:0 0 .9rem}
+.lesson-tab{border:1px solid rgba(196,181,253,.2);border-radius:999px;padding:.58rem .9rem;color:#d8cff0;background:rgba(139,92,246,.08);font:600 .74rem var(--mono);cursor:pointer;transition:.2s}
+.lesson-tab.active,.lesson-tab:hover{color:#fff;border-color:rgba(167,139,250,.65);background:linear-gradient(135deg,rgba(139,92,246,.32),rgba(91,33,182,.2));box-shadow:0 0 18px rgba(139,92,246,.13)}
+.terminal-screen{min-height:17rem;max-height:25rem;overflow:auto;padding:1rem 1.1rem;background:rgba(2,2,8,.82);font:.76rem/1.75 var(--mono);scroll-behavior:smooth}
+.terminal-line{margin:0 0 .28rem;white-space:pre-wrap;overflow-wrap:anywhere;color:#d8d1e9}
+.terminal-line .prompt{color:#a78bfa}.terminal-line .cmd{color:#fff}.terminal-line .success{color:#6ee7b7}.terminal-line .dim{color:#8d849f}.terminal-line .yellow{color:#f6cf75}
+.typing-caret{display:inline-block;width:.48rem;height:.9rem;vertical-align:-.12rem;background:#a78bfa;animation:terminal-blink .8s steps(2,start) infinite}
+@keyframes terminal-blink{to{visibility:hidden}}
+.terminal-controls{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;padding:.7rem .9rem;border-top:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.025)}
+.terminal-hint-inline{margin-left:auto;color:var(--ink-dim);font:.62rem var(--mono);letter-spacing:.06em}
+.lesson-explanation{margin-top:.9rem;padding:1.15rem 1.2rem}
+.lesson-label{margin-bottom:.45rem;color:#bba6f5;font:.65rem var(--mono);letter-spacing:.13em}
+.lesson-explanation h3{margin:0 0 .5rem;font-size:1.08rem}
+.lesson-explanation p{margin:0;color:var(--ink-dim);font-size:.9rem;line-height:1.7}
+.lesson-tip{margin-top:.85rem;padding:.75rem .85rem;border:1px solid rgba(167,139,250,.17);border-radius:.7rem;background:rgba(139,92,246,.08);color:#d8d0ea;font-size:.82rem;line-height:1.6}
+.lesson-tip strong{color:#c4b5fd}
+@media(max-width:35rem){.lesson-tabs{gap:.4rem}.lesson-tab{font-size:.66rem;padding:.52rem .68rem}.terminal-screen{font-size:.69rem;min-height:16rem;padding:.8rem}.terminal-hint-inline{width:100%;margin-left:0;font-size:.57rem}}
+@media(prefers-reduced-motion:reduce){.typing-caret{animation:none}}
+
 </style>
 </head>
 <body>
@@ -59,7 +102,7 @@
 <nav aria-label="Primary navigation">
   <div class="nav-inner glass">
     <a class="brand" href="index.html" aria-label="XoDos-Ark home">
-      <span aria-hidden="true" style="font-size:1.35rem;color:#a78bfa">◉</span><span>XoDos-Ark</span>
+      <img class="brand-logo-ark" src="assets/logo.png" alt="" width="52" height="52" decoding="async"><span>XoDos-Ark</span>
     </a>
     <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span></button>
     <div class="nav-links" id="navMenu">
@@ -98,37 +141,48 @@
   </section>
 
   <section id="terminal" class="wrap learn-section">
-    <div class="sec-head rv"><span class="kicker">HANDS-ON PRACTICE</span><h2>Try the interactive terminal</h2><p>Type a command or tap a suggestion. This is a browser-based teaching simulation — it does not connect to your phone, install software, or execute real shell commands.</p></div>
+    <div class="sec-head rv"><span class="kicker">AUTOMATIC TERMINAL LOOP</span><h2>Watch 15 native commands in action</h2><p>As soon as this section enters view, the terminal starts typing commands, showing example output, and explaining each one. It keeps cycling through all 15 examples until the visitor pauses it.</p></div>
+<div class="lesson-tabs" id="lessonTabs" role="group" aria-label="Jump to a command example">
+      <button class="lesson-tab active" type="button" data-index="0">apt update</button>
+      <button class="lesson-tab" type="button" data-index="1">apt upgrade</button>
+      <button class="lesson-tab" type="button" data-index="2">apt search git</button>
+      <button class="lesson-tab" type="button" data-index="3">install git</button>
+      <button class="lesson-tab" type="button" data-index="4">install python</button>
+      <button class="lesson-tab" type="button" data-index="5">install cmatrix</button>
+      <button class="lesson-tab" type="button" data-index="6">install firefox</button>
+      <button class="lesson-tab" type="button" data-index="7">install curl</button>
+      <button class="lesson-tab" type="button" data-index="8">install wget</button>
+      <button class="lesson-tab" type="button" data-index="9">install nano</button>
+      <button class="lesson-tab" type="button" data-index="10">install vim</button>
+      <button class="lesson-tab" type="button" data-index="11">install htop</button>
+      <button class="lesson-tab" type="button" data-index="12">install tree</button>
+      <button class="lesson-tab" type="button" data-index="13">install unzip</button>
+      <button class="lesson-tab" type="button" data-index="14">python --version</button>
+    </div>
     <div class="glass terminal rv">
-      <div class="terminal-head"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span class="terminal-title">ark-native — practice shell</span><span class="terminal-status">● DEMO MODE</span></div>
-      <div class="terminal-screen" id="terminalOutput" role="log" aria-live="polite">
-        <p class="terminal-line"><span class="good">XoDos-Ark Native Environment — learning simulator</span></p>
-        <p class="terminal-line muted">This is a simulation. No commands are run on your device.</p>
-        <p class="terminal-line">Type <span class="good">help</span> and press Enter to begin.</p>
+      <div class="terminal-head"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span class="terminal-title">Native Environment — root shell</span><span class="terminal-status">● LIVE DEMO</span></div>
+      <div class="terminal-screen" id="terminalOutput" role="log" aria-live="polite" aria-label="Animated terminal demonstration"></div>
+      <div class="terminal-controls">
+        <button class="mini-button" id="replayLesson" type="button">↻ Restart loop</button>
+        <button class="mini-button" id="pauseLesson" type="button">Ⅱ Pause</button>
+        <span class="terminal-hint-inline" id="loopStatus">AUTO LOOP · 15 COMMANDS · DEMO OUTPUT</span>
       </div>
-      <form class="terminal-form" id="terminalForm" autocomplete="off">
-        <label for="terminalInput">user@ark:~$</label>
-        <input id="terminalInput" type="text" spellcheck="false" autocapitalize="off" placeholder="apt install firefox" aria-label="Enter a practice command">
-        <button type="submit">Run ↵</button>
-      </form>
-      <div class="terminal-hint">Practice only · Try: <code>apt update</code>, <code>apt search firefox</code>, <code>apt install firefox</code></div>
     </div>
-    <div class="quick-list" aria-label="Example commands">
-      <button class="quick-command" type="button" data-command="help">help</button>
-      <button class="quick-command" type="button" data-command="apt update">apt update</button>
-      <button class="quick-command" type="button" data-command="apt search firefox">apt search firefox</button>
-      <button class="quick-command" type="button" data-command="apt install firefox">apt install firefox</button>
-      <button class="quick-command" type="button" data-command="apt show firefox">apt show firefox</button>
-      <button class="quick-command" type="button" data-command="clear">clear</button>
-    </div>
+    <article class="card glass lesson-explanation" aria-live="polite">
+      <div class="lesson-label">COMMAND EXPLANATION</div>
+      <h3 id="lessonTitle">apt update — Refresh package lists</h3>
+      <p id="lessonDescription">This asks apt to contact the repositories configured in your Ark environment and refresh its local package information. It does not install or upgrade packages by itself.</p>
+      <div class="lesson-tip"><strong>Remember:</strong> <span id="lessonTip">Run this before searching for or installing packages, so apt has the latest package information.</span></div>
+    </article>
+    <p class="note" style="margin-top:1rem"><strong>Learning demo:</strong> The terminal animation is a simulated, continuously repeating walkthrough. It does not connect to the device, run real shell commands, or install packages. The output is illustrative; your actual Ark terminal and repository determine which packages are available.</p>
   </section>
 
   <section class="wrap learn-section">
-    <div class="sec-head rv"><span class="kicker">YOUR FIRST INSTALL</span><h2>Follow this simple flow</h2></div>
+    <div class="sec-head rv"><span class="kicker">LEARN TO USE PACKGES</span><h2>HOW TO USE YOUR INSTALLED PACKAGES</h2></div>
     <div class="steps">
-      <article class="card glass step rv"><h3>Open Native Environment in Ark</h3><p>Launch the native environment from the Ark app and wait until its terminal prompt is ready.</p></article>
-      <article class="card glass step rv"><h3>Refresh package information</h3><p>Run <code>apt update</code> so apt refreshes the package lists from the configured source.</p></article>
-      <article class="card glass step rv"><h3>Search before installing</h3><p>Run <code>apt search firefox</code> (or another package name) to check whether it is available.</p></article>
+      <article class="card glass step rv"><h3>CHECK DOES IT REQUIRES GUI ?</h3><p>check that to create usage of preferred installed package require's GUI or CLI </p></article>
+      <article class="card glass step rv"><h3>IF IT DOESN'T REQUIEES GUI <b>THEN:</h3><p>Run Start-up command of INSTALLED PACKGE .</p></article>
+      <article class="card glass step rv"><h3>IF IT REQUIRES GUI THEN:</h3><p>Ensure that x11 is set as Defalut Display & then run start-up command of that installed packge then open x11 using drawer </p></article>
       <article class="card glass step rv"><h3>Install the package</h3><p>Run <code>apt install firefox</code>. Review the packages and confirmation prompt shown by your real environment.</p></article>
       <article class="card glass step rv"><h3>Launch and explore</h3><p>After installation completes, use the package's documented launch command. Launch commands can differ between packages.</p></article>
     </div>
@@ -140,69 +194,151 @@
 <script src="main.js"></script>
 <script>
 (function(){
-  const output=document.getElementById('terminalOutput');
-  const form=document.getElementById('terminalForm');
-  const input=document.getElementById('terminalInput');
-  const installed=new Set();
-  const catalog={
-    firefox:{version:'Example package entry',description:'Firefox web browser',status:'Example listing only'},
-    curl:{version:'Example package entry',description:'Command-line URL transfer tool',status:'Example listing only'},
-    git:{version:'Example package entry',description:'Distributed version control system',status:'Example listing only'},
-    nano:{version:'Example package entry',description:'Small terminal text editor',status:'Example listing only'}
-  };
-  function line(html,cls=''){const p=document.createElement('p');p.className='terminal-line '+cls;p.innerHTML=html;output.appendChild(p);output.scrollTop=output.scrollHeight;}
-  function safe(text){return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-  function run(raw){
-    const cmd=raw.trim(); if(!cmd)return;
-    line('<span class="prompt">user@ark:~$</span> '+safe(cmd));
-    const parts=cmd.split(/\\s+/); const verb=parts[0]; const sub=parts[1]; const pkg=parts[2];
-    if(cmd==='clear'){output.innerHTML='';return;}
-    if(cmd==='help'||cmd==='apt --help'){
-      line('<span class="good">Available practice commands</span>');
-      line('apt update — refresh package lists');
-      line('apt search &lt;name&gt; — search for a package');
-      line('apt install &lt;name&gt; — practise installing a package');
-      line('apt show &lt;name&gt; — view package information');
-      line('apt remove &lt;name&gt; — practise removing a package');
-      line('clear — clear this demo terminal');
-      line('<span class="muted">This simulator does not run real apt or access Ark repositories.</span>'); return;
+  const section=document.getElementById('terminal');
+  const screen=document.getElementById('terminalOutput');
+  if(!screen)return;
+  const title=document.getElementById('lessonTitle');
+  const description=document.getElementById('lessonDescription');
+  const tip=document.getElementById('lessonTip');
+  const replay=document.getElementById('replayLesson');
+  const pause=document.getElementById('pauseLesson');
+  const status=document.getElementById('loopStatus');
+  const tabs=[...document.querySelectorAll('.lesson-tab')];
+
+  // Illustrative walkthroughs only. These do not query or modify the device.
+  const lessons=[
+    {cmd:'apt update',title:'apt update — Refresh package lists',desc:'Refreshes the local package index from the repositories configured in the native environment. It does not install packages by itself.',tip:'Run this before searching for or installing packages.',out:['Hit: Ark package repository','Reading package lists... Done','Package lists refreshed (example output).']},
+    {cmd:'apt upgrade',title:'apt upgrade — Upgrade installed packages',desc:'Checks for newer versions of installed packages and proposes upgrades based on the package lists. Review the real terminal summary before confirming.',tip:'An upgrade can change installed software. Read the package list and confirmation prompt carefully.',out:['Reading package lists... Done','Calculating upgrades... Done','0 upgraded, 0 newly installed (illustrative).']},
+    {cmd:'apt search git',title:'apt search git — Find a package',desc:'Searches package metadata for entries matching the word git. Use search to check package names before installing.',tip:'A search result confirms that a package is listed; it does not mean it is already installed.',out:['Sorting package lists... Done','git — fast, scalable distributed revision control system','Search complete (illustrative result).']},
+    {cmd:'apt install git',title:'apt install git — Install Git',desc:'Requests installation of Git and any required dependencies from the configured package sources.',tip:'After a real installation, try git --version to check that the command is available.',out:['Building dependency tree... Done','The following package will be installed: git','Unpacking git...','Setting up git... Done (example).']},
+    {cmd:'apt install python',title:'apt install python — Install Python',desc:'Requests the Python package selected by the repository. Package names and Python versions can differ between distributions.',tip:'Check the repository package details first; some systems use python3 as the package name.',out:['Reading package lists... Done','Checking dependencies... Done','Setting up python... Done (example).']},
+    {cmd:'apt install cmatrix',title:'apt install cmatrix — Install a terminal effect',desc:'Requests installation of cmatrix, a terminal program that displays a Matrix-style scrolling character effect.',tip:'Package availability depends on the Ark repository build.',out:['Selecting package cmatrix...','Fetching package files...','Setting up cmatrix... Done (example).']},
+    {cmd:'apt install firefox',title:'apt install firefox — Install a browser',desc:'Requests installation of the Firefox browser and its dependencies, if the package is available for this environment.',tip:'Desktop or graphical apps may need additional environment support. Check Ark documentation for app-launch behaviour.',out:['Checking package availability...','Resolving dependencies... Done','Setting up firefox... Done (example).']},
+    {cmd:'apt install curl',title:'apt install curl — Install curl',desc:'Installs curl, a command-line tool for transferring data to or from network addresses.',tip:'Use curl only with trusted URLs. Avoid piping unfamiliar downloads straight into a shell.',out:['Selecting curl...','Unpacking curl...','Setting up curl... Done (example).']},
+    {cmd:'apt install wget',title:'apt install wget — Install wget',desc:'Requests installation of wget, a command-line utility commonly used to retrieve files from web servers.',tip:'Check the source and destination before downloading files.',out:['Selecting wget...','Fetching package files...','Setting up wget... Done (example).']},
+    {cmd:'apt install nano',title:'apt install nano — Install a simple text editor',desc:'Requests installation of Nano, a beginner-friendly terminal text editor.',tip:'After installation, nano filename opens a file in the editor, if that command is provided by the package.',out:['Selecting nano...','Unpacking nano...','Setting up nano... Done (example).']},
+    {cmd:'apt install vim',title:'apt install vim — Install Vim',desc:'Requests installation of Vim, a powerful terminal-based text editor.',tip:'Vim has its own keyboard controls. Learn the basic save and quit commands before editing important files.',out:['Selecting vim...','Resolving dependencies... Done','Setting up vim... Done (example).']},
+    {cmd:'apt install htop',title:'apt install htop — Install a process viewer',desc:'Requests installation of htop, an interactive process and resource monitor for terminal environments.',tip:'The information htop can display depends on what process and system metrics Ark exposes.',out:['Selecting htop...','Unpacking htop...','Setting up htop... Done (example).']},
+    {cmd:'apt install tree',title:'apt install tree — Show folders as a tree',desc:'Requests installation of tree, a utility that displays directories and files in a tree-like layout.',tip:'Try tree in a project folder to understand its directory structure.',out:['Selecting tree...','Fetching package files...','Setting up tree... Done (example).']},
+    {cmd:'apt install unzip',title:'apt install unzip — Extract ZIP files',desc:'Requests installation of unzip, a command-line utility for extracting ZIP archives.',tip:'Inspect archive contents and use a destination folder when extracting files you do not recognise.',out:['Selecting unzip...','Unpacking unzip...','Setting up unzip... Done (example).']},
+    {cmd:'python --version',title:'python --version — Check Python',desc:'Asks the Python interpreter to print its version number. This is a verification command, not an installation command.',tip:'If the command is not found, check which Python package name your repository provides and whether its executable is named python or python3.',out:['Python 3.x.x (illustrative version output).','Version check complete.']}
+  ];
+
+  let index=0, paused=false, token=0, started=false, inView=false, pauseWaiters=[];
+  const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+  async function delay(ms,myToken){
+    const until=Date.now()+ms;
+    while(Date.now()<until && myToken===token){
+      while(paused && myToken===token) await new Promise(resolve=>pauseWaiters.push(resolve));
+      await sleep(Math.min(60,Math.max(0,until-Date.now())));
     }
-    if(verb!=='apt'){line('<span class="warn">Command not recognised.</span> Try <b>help</b>.');return;}
-    if(sub==='update'&&parts.length===2){
-      line('Reading package lists... Done');
-      line('<span class="good">Demo:</span> package list refresh explained. In the real Ark terminal, apt update contacts its configured repository.'); return;
-    }
-    if(sub==='search'&&parts.length===3){
-      const name=pkg.toLowerCase();
-      if(catalog[name]) line('<span class="good">'+safe(name)+'</span> — '+safe(catalog[name].description)+' <span class="muted">(illustrative demo result)</span>');
-      else line('<span class="warn">No illustrative match for '+safe(name)+'.</span> Try firefox, curl, git, or nano in this demo. The real repository may differ.');
-      line('<span class="muted">A real search result must be checked in the Ark app.</span>'); return;
-    }
-    if((sub==='install'||sub==='remove')&&parts.length===3){
-      const name=pkg.toLowerCase();
-      if(!catalog[name]){line('<span class="warn">Package not in this demo catalogue.</span> Try firefox, curl, git, or nano.');return;}
-      if(sub==='install'){
-        installed.add(name);
-        line('Reading package information... Done');
-        line('The following package would be installed: <b>'+safe(name)+'</b>');
-        line('<span class="good">Demo complete:</span> '+safe(name)+' marked as installed in this browser simulation.');
-      }else{
-        installed.delete(name);
-        line('<span class="good">Demo complete:</span> '+safe(name)+' removed from this browser simulation.');
-      }
-      line('<span class="muted">No software was downloaded or installed on your device.</span>');return;
-    }
-    if(sub==='show'&&parts.length===3){
-      const item=catalog[pkg.toLowerCase()];
-      if(!item){line('<span class="warn">No demo information for that package.</span>');return;}
-      line('<b>Package:</b> '+safe(pkg));
-      line('<b>Description:</b> '+safe(item.description));
-      line('<b>Source:</b> illustrative example, not live repository data');return;
-    }
-    line('<span class="warn">Usage:</span> apt update | apt search &lt;name&gt; | apt install &lt;name&gt; | apt show &lt;name&gt; | apt remove &lt;name&gt;');
   }
-  form.addEventListener('submit',e=>{e.preventDefault();run(input.value);input.value='';input.focus();});
-  document.querySelectorAll('[data-command]').forEach(btn=>btn.addEventListener('click',()=>{input.value=btn.dataset.command;run(input.value);input.value='';}));
+  function addLine(text,kind='normal'){
+    const p=document.createElement('p');p.className='terminal-line';
+    const span=document.createElement('span');
+    span.className=kind==='success'?'success':kind==='dim'?'dim':kind==='yellow'?'yellow':'';
+    span.textContent=text;p.appendChild(span);screen.appendChild(p);
+    screen.scrollTop=screen.scrollHeight;
+  }
+  async function typeCommand(command,myToken){
+    const p=document.createElement('p');p.className='terminal-line';
+    const prompt=document.createElement('span');prompt.className='prompt';prompt.textContent='root@localhost:~$ ';
+    const typed=document.createElement('span');typed.className='cmd';
+    const caret=document.createElement('span');caret.className='typing-caret';
+    p.append(prompt,typed,caret);screen.appendChild(p);
+    for(const char of command){
+      if(myToken!==token)return;
+      await delay(43,myToken);
+      typed.textContent+=char;screen.scrollTop=screen.scrollHeight;
+    }
+    caret.remove();await delay(220,myToken);
+  }
+  function selectTab(i){
+    tabs.forEach((t,n)=>t.classList.toggle('active',n===i));
+  }
+  async function showLesson(i,myToken){
+    const lesson=lessons[i];
+    selectTab(i);
+    title.textContent=lesson.title;
+    description.textContent=lesson.desc;
+    tip.textContent=lesson.tip;
+    await typeCommand(lesson.cmd,myToken);
+    for(const out of lesson.out){
+      if(myToken!==token)return;
+      await delay(330,myToken);
+      addLine(out, /Done|complete|Python/.test(out)?'success':'normal');
+    }
+    await delay(1050,myToken);
+  }
+  async function loop(myToken){
+    while(myToken===token){
+      if(!inView){await sleep(250);continue;}
+      const current=index;
+      await showLesson(current,myToken);
+      if(myToken!==token)return;
+      index=(index+1)%lessons.length;
+      if(index===0){
+        await delay(500,myToken);
+        addLine('--- demo cycle complete · starting again ---','dim');
+        await delay(450,myToken);
+        // Keep the terminal tidy while the loop continues forever.
+        const lines=screen.querySelectorAll('.terminal-line');
+        if(lines.length>36){
+          screen.innerHTML='';
+          addLine('XoDos-Ark Native Environment · automatic learning loop','success');
+          addLine('15 command examples · cycle repeats continuously','dim');
+        }
+      }
+    }
+  }
+  function start(){
+    if(started)return;
+    started=true;
+    const myToken=++token;
+    screen.innerHTML='';
+    addLine('XoDos-Ark Native Environment [automatic tutorial]','success');
+    addLine('root@localhost · 15 examples · repeating loop','dim');
+    loop(myToken);
+  }
+  tabs.forEach((tab)=>{
+    tab.addEventListener('click',()=>{
+      const i=Number(tab.dataset.index);
+      if(!Number.isInteger(i)||i<0||i>=lessons.length)return;
+      index=i;
+      if(!started)start();
+      // Selecting an example restarts the sequence from that command.
+      token++;const myToken=token;
+      screen.innerHTML='';
+      addLine('XoDos-Ark Native Environment [selected example]','success');
+      addLine('root@localhost:~$ ready','dim');
+      loop(myToken);
+    });
+  });
+  replay.addEventListener('click',()=>{
+    index=0;paused=false;pause.textContent='Ⅱ Pause';
+    pauseWaiters.splice(0).forEach(resolve=>resolve());
+    if(!started){start();return;}
+    token++;const myToken=token;
+    screen.innerHTML='';
+    addLine('Restarting 15-command learning loop...','success');
+    loop(myToken);
+  });
+  pause.addEventListener('click',()=>{
+    paused=!paused;
+    pause.textContent=paused?'▶ Resume':'Ⅱ Pause';
+    if(!paused)pauseWaiters.splice(0).forEach(resolve=>resolve());
+  });
+  if('IntersectionObserver' in window){
+    const observer=new IntersectionObserver(entries=>{
+      inView=entries.some(entry=>entry.isIntersecting);
+      if(inView)start();
+    },{threshold:.18});
+    observer.observe(section);
+  }else{inView=true;start();}
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden && !paused){paused=true;pause.textContent='▶ Resume';}
+    else if(!document.hidden && paused){paused=false;pause.textContent='Ⅱ Pause';pauseWaiters.splice(0).forEach(resolve=>resolve());}
+  });
 })();
 </script>
 </body>
