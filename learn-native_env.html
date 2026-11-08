@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="theme-color" content="#080512">
+<meta name="description" content="Learn how to use the XoDos-Ark native environment and install packages with its apt package manager.">
+<title>Learn Native Environment — XoDos-Ark</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Page-specific styles; the site's existing purple glass design remains in style.css. */
+.learn-hero { padding: clamp(2.4rem, 8vw, 4.5rem) 0 1.5rem; text-align:center; }
+.learn-hero h1 { margin:.8rem auto; max-width: 52rem; font-size:clamp(2rem,7vw,3.5rem); line-height:1.08; letter-spacing:-.045em; }
+.learn-hero p { max-width:46rem; margin:1rem auto 0; color:var(--ink-dim); font-size:1.02rem; }
+.learn-hero .ark { background:linear-gradient(90deg,#c4b5fd,#8b5cf6); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.learn-section { padding:1.6rem 0 2.4rem; }
+.learn-section .sec-head { margin-bottom:1.3rem; }
+.learn-grid { display:grid; grid-template-columns:1fr; gap:1rem; }
+.learn-card { padding:1.15rem; }
+.learn-card h3 { margin-bottom:.45rem; }
+.learn-card p,.learn-card li { color:var(--ink-dim); font-size:.9rem; }
+.learn-card ul { padding-left:1.15rem; margin-top:.5rem; }
+.learn-card code,.command-chip { color:#e4d9ff; font-family:var(--mono); }
+.command-chip { display:block; overflow-wrap:anywhere; margin:.65rem 0; padding:.72rem .85rem; border:1px solid rgba(196,181,253,.18); border-radius:.75rem; background:rgba(5,3,13,.62); font-size:.8rem; }
+.terminal { overflow:hidden; padding:0; }
+.terminal-head { display:flex; align-items:center; gap:.45rem; padding:.85rem 1rem; border-bottom:1px solid rgba(255,255,255,.1); background:rgba(0,0,0,.18); }
+.terminal-dot { width:.62rem; height:.62rem; border-radius:50%; }
+.terminal-dot.red{background:#ff6b6b}.terminal-dot.yellow{background:#f6c85f}.terminal-dot.green{background:#42d69b}
+.terminal-title { margin-left:.45rem; color:var(--ink-dim); font: .72rem var(--mono); }
+.terminal-status { margin-left:auto; color:#6ee7b7; font:.65rem var(--mono); }
+.terminal-screen { min-height:18rem; max-height:26rem; overflow:auto; padding:1rem; background:rgba(3,2,9,.68); font: .78rem/1.7 var(--mono); }
+.terminal-line { margin:0 0 .35rem; white-space:pre-wrap; overflow-wrap:anywhere; color:#d8d1e9; }
+.terminal-line .prompt { color:#a78bfa; }
+.terminal-line .good { color:#6ee7b7; }
+.terminal-line .muted { color:#8f86a7; }
+.terminal-line .warn { color:#f6c85f; }
+.terminal-form { display:flex; align-items:center; gap:.5rem; padding:.8rem 1rem; border-top:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.025); }
+.terminal-form label { color:#a78bfa; font: .78rem var(--mono); white-space:nowrap; }
+.terminal-form input { min-width:0; flex:1; border:0; outline:0; color:#fff; background:transparent; font: .82rem var(--mono); }
+.terminal-form input::placeholder { color:#746b88; }
+.terminal-form button,.mini-button { border:1px solid rgba(196,181,253,.25); border-radius:.65rem; padding:.55rem .8rem; color:#fff; background:rgba(139,92,246,.2); font:600 .75rem var(--mono); cursor:pointer; }
+.terminal-form button:focus-visible,.mini-button:focus-visible,.quick-command:focus-visible { outline:2px solid #c4b5fd; outline-offset:3px; }
+.terminal-hint { padding:.65rem 1rem; color:var(--ink-dim); font-size:.72rem; border-top:1px solid rgba(255,255,255,.07); }
+.quick-list { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.8rem; }
+.quick-command { border:1px solid rgba(196,181,253,.2); border-radius:999px; padding:.48rem .75rem; color:#ded5f6; background:rgba(139,92,246,.1); font: .7rem var(--mono); cursor:pointer; }
+.quick-command:hover { background:rgba(139,92,246,.22); }
+.steps { counter-reset:step; display:grid; gap:.8rem; }
+.step { position:relative; padding:1rem 1rem 1rem 3.2rem; }
+.step:before { counter-increment:step; content:counter(step); position:absolute; left:1rem; top:1rem; display:grid; place-items:center; width:1.55rem; height:1.55rem; border-radius:50%; color:white; background:linear-gradient(135deg,#a78bfa,#6d28d9); font:700 .75rem var(--mono); }
+.step h3 { margin-bottom:.25rem; font-size:1rem; }
+.step p { color:var(--ink-dim); font-size:.86rem; }
+.note { border-left:3px solid #a78bfa; padding:.8rem 1rem; color:var(--ink-dim); background:rgba(139,92,246,.08); border-radius:0 .7rem .7rem 0; font-size:.84rem; }
+@media(min-width:48rem){.learn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.learn-grid .wide{grid-column:1/-1}.terminal-screen{min-height:20rem}}
+@media(max-width:35rem){.terminal-form{gap:.35rem;padding:.7rem}.terminal-form button{padding:.5rem .65rem}.terminal-screen{font-size:.72rem}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><div class="orb orb-a"></div><div class="orb orb-b"></div><div class="grid"></div></div>
+<nav aria-label="Primary navigation">
+  <div class="nav-inner glass">
+    <a class="brand" href="index.html" aria-label="XoDos-Ark home">
+      <span aria-hidden="true" style="font-size:1.35rem;color:#a78bfa">◉</span><span>XoDos-Ark</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu"><span></span><span></span><span></span></button>
+    <div class="nav-links" id="navMenu">
+      <a href="index.html">Home</a><a href="#basics">Basics</a><a href="#commands">Commands</a><a href="#terminal">Try terminal</a>
+      <a class="btn btn-primary" href="#terminal">Start learning</a>
+    </div>
+  </div>
+</nav>
+<main id="top">
+  <header class="learn-hero wrap">
+    <span class="badge glass"><span class="dot"></span> NATIVE ENVIRONMENT • INTERACTIVE GUIDE</span>
+    <h1>Your Android terminal.<br><span class="ark">Your packages. Your rules.</span></h1>
+    <p>Learn how to use the XoDos-Ark native environment, understand the <code>apt</code> commands, and practise installing packages in a safe, interactive demo.</p>
+  </header>
+
+  <section id="basics" class="wrap learn-section">
+    <div class="sec-head rv"><span class="kicker">THE BASICS</span><h2>What is the native environment?</h2><p>A Linux-like command-line workspace inside Ark, with its own package setup and custom package repository.</p></div>
+    <div class="learn-grid">
+      <article class="card glass learn-card rv"><h3>01 · The terminal</h3><p>Type commands to manage your environment. The prompt is where you enter an instruction and press Enter to run it.</p><span class="command-chip">$ apt --help</span></article>
+      <article class="card glass learn-card rv"><h3>02 · The package manager</h3><p><code>apt</code> is used to find, install, and remove packages made available to your environment.</p><span class="command-chip">$ apt install firefox</span></article>
+      <article class="card glass learn-card rv"><h3>03 · The custom repository</h3><p>Ark is configured to use its package source. Package availability depends on the repository and the environment version.</p><span class="command-chip">$ apt search firefox</span></article>
+      <article class="card glass learn-card rv"><h3>04 · No Android root required</h3><p>The native environment runs within Ark's app-managed environment. It is separate from Android's system package manager.</p><span class="command-chip">Android ≠ apt environment</span></article>
+    </div>
+  </section>
+
+  <section id="commands" class="wrap learn-section">
+    <div class="sec-head rv"><span class="kicker">COMMAND CHEATSHEET</span><h2>Commands you will use</h2><p>Use these as a starting point. Replace the example package name with a package that exists in Ark's repository.</p></div>
+    <div class="learn-grid">
+      <article class="card glass learn-card rv"><h3>Update package lists</h3><p>Refreshes the package information available to the environment.</p><span class="command-chip">apt update</span></article>
+      <article class="card glass learn-card rv"><h3>Search for a package</h3><p>Checks whether a package name is listed in the configured repository.</p><span class="command-chip">apt search firefox</span></article>
+      <article class="card glass learn-card rv"><h3>Install a package</h3><p>Installs the named package and any required dependencies.</p><span class="command-chip">apt install firefox</span></article>
+      <article class="card glass learn-card rv"><h3>Remove a package</h3><p>Removes an installed package. Read the confirmation prompt in your actual terminal before proceeding.</p><span class="command-chip">apt remove firefox</span></article>
+      <article class="card glass learn-card rv"><h3>Show package information</h3><p>Displays details for a package, if it is available.</p><span class="command-chip">apt show firefox</span></article>
+      <article class="card glass learn-card rv"><h3>See apt help</h3><p>Lists supported apt commands and usage information.</p><span class="command-chip">apt --help</span></article>
+    </div>
+  </section>
+
+  <section id="terminal" class="wrap learn-section">
+    <div class="sec-head rv"><span class="kicker">HANDS-ON PRACTICE</span><h2>Try the interactive terminal</h2><p>Type a command or tap a suggestion. This is a browser-based teaching simulation — it does not connect to your phone, install software, or execute real shell commands.</p></div>
+    <div class="glass terminal rv">
+      <div class="terminal-head"><span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span><span class="terminal-title">ark-native — practice shell</span><span class="terminal-status">● DEMO MODE</span></div>
+      <div class="terminal-screen" id="terminalOutput" role="log" aria-live="polite">
+        <p class="terminal-line"><span class="good">XoDos-Ark Native Environment — learning simulator</span></p>
+        <p class="terminal-line muted">This is a simulation. No commands are run on your device.</p>
+        <p class="terminal-line">Type <span class="good">help</span> and press Enter to begin.</p>
+      </div>
+      <form class="terminal-form" id="terminalForm" autocomplete="off">
+        <label for="terminalInput">user@ark:~$</label>
+        <input id="terminalInput" type="text" spellcheck="false" autocapitalize="off" placeholder="apt install firefox" aria-label="Enter a practice command">
+        <button type="submit">Run ↵</button>
+      </form>
+      <div class="terminal-hint">Practice only · Try: <code>apt update</code>, <code>apt search firefox</code>, <code>apt install firefox</code></div>
+    </div>
+    <div class="quick-list" aria-label="Example commands">
+      <button class="quick-command" type="button" data-command="help">help</button>
+      <button class="quick-command" type="button" data-command="apt update">apt update</button>
+      <button class="quick-command" type="button" data-command="apt search firefox">apt search firefox</button>
+      <button class="quick-command" type="button" data-command="apt install firefox">apt install firefox</button>
+      <button class="quick-command" type="button" data-command="apt show firefox">apt show firefox</button>
+      <button class="quick-command" type="button" data-command="clear">clear</button>
+    </div>
+  </section>
+
+  <section class="wrap learn-section">
+    <div class="sec-head rv"><span class="kicker">YOUR FIRST INSTALL</span><h2>Follow this simple flow</h2></div>
+    <div class="steps">
+      <article class="card glass step rv"><h3>Open Native Environment in Ark</h3><p>Launch the native environment from the Ark app and wait until its terminal prompt is ready.</p></article>
+      <article class="card glass step rv"><h3>Refresh package information</h3><p>Run <code>apt update</code> so apt refreshes the package lists from the configured source.</p></article>
+      <article class="card glass step rv"><h3>Search before installing</h3><p>Run <code>apt search firefox</code> (or another package name) to check whether it is available.</p></article>
+      <article class="card glass step rv"><h3>Install the package</h3><p>Run <code>apt install firefox</code>. Review the packages and confirmation prompt shown by your real environment.</p></article>
+      <article class="card glass step rv"><h3>Launch and explore</h3><p>After installation completes, use the package's documented launch command. Launch commands can differ between packages.</p></article>
+    </div>
+    <p class="note" style="margin-top:1rem"><strong>Note:</strong> This guide uses Firefox as an example. It does not guarantee Firefox is currently available in every Ark repository build. Check the real terminal's search result before installing. Avoid running commands copied from sources you do not trust.</p>
+  </section>
+</main>
+<footer class="wrap"><div class="glass"><strong>XoDos-Ark</strong><div class="foot-links"><a href="index.html">Home</a> · <a href="https://github.com/harshlalvani157-wq/xodos-ark.web" target="_blank" rel="noopener">Website source</a></div><p class="fine">Native Environment learning guide · Interactive terminal is a simulation.</p></div></footer>
+
+<script src="main.js"></script>
+<script>
+(function(){
+  const output=document.getElementById('terminalOutput');
+  const form=document.getElementById('terminalForm');
+  const input=document.getElementById('terminalInput');
+  const installed=new Set();
+  const catalog={
+    firefox:{version:'Example package entry',description:'Firefox web browser',status:'Example listing only'},
+    curl:{version:'Example package entry',description:'Command-line URL transfer tool',status:'Example listing only'},
+    git:{version:'Example package entry',description:'Distributed version control system',status:'Example listing only'},
+    nano:{version:'Example package entry',description:'Small terminal text editor',status:'Example listing only'}
+  };
+  function line(html,cls=''){const p=document.createElement('p');p.className='terminal-line '+cls;p.innerHTML=html;output.appendChild(p);output.scrollTop=output.scrollHeight;}
+  function safe(text){return text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function run(raw){
+    const cmd=raw.trim(); if(!cmd)return;
+    line('<span class="prompt">user@ark:~$</span> '+safe(cmd));
+    const parts=cmd.split(/\\s+/); const verb=parts[0]; const sub=parts[1]; const pkg=parts[2];
+    if(cmd==='clear'){output.innerHTML='';return;}
+    if(cmd==='help'||cmd==='apt --help'){
+      line('<span class="good">Available practice commands</span>');
+      line('apt update — refresh package lists');
+      line('apt search &lt;name&gt; — search for a package');
+      line('apt install &lt;name&gt; — practise installing a package');
+      line('apt show &lt;name&gt; — view package information');
+      line('apt remove &lt;name&gt; — practise removing a package');
+      line('clear — clear this demo terminal');
+      line('<span class="muted">This simulator does not run real apt or access Ark repositories.</span>'); return;
+    }
+    if(verb!=='apt'){line('<span class="warn">Command not recognised.</span> Try <b>help</b>.');return;}
+    if(sub==='update'&&parts.length===2){
+      line('Reading package lists... Done');
+      line('<span class="good">Demo:</span> package list refresh explained. In the real Ark terminal, apt update contacts its configured repository.'); return;
+    }
+    if(sub==='search'&&parts.length===3){
+      const name=pkg.toLowerCase();
+      if(catalog[name]) line('<span class="good">'+safe(name)+'</span> — '+safe(catalog[name].description)+' <span class="muted">(illustrative demo result)</span>');
+      else line('<span class="warn">No illustrative match for '+safe(name)+'.</span> Try firefox, curl, git, or nano in this demo. The real repository may differ.');
+      line('<span class="muted">A real search result must be checked in the Ark app.</span>'); return;
+    }
+    if((sub==='install'||sub==='remove')&&parts.length===3){
+      const name=pkg.toLowerCase();
+      if(!catalog[name]){line('<span class="warn">Package not in this demo catalogue.</span> Try firefox, curl, git, or nano.');return;}
+      if(sub==='install'){
+        installed.add(name);
+        line('Reading package information... Done');
+        line('The following package would be installed: <b>'+safe(name)+'</b>');
+        line('<span class="good">Demo complete:</span> '+safe(name)+' marked as installed in this browser simulation.');
+      }else{
+        installed.delete(name);
+        line('<span class="good">Demo complete:</span> '+safe(name)+' removed from this browser simulation.');
+      }
+      line('<span class="muted">No software was downloaded or installed on your device.</span>');return;
+    }
+    if(sub==='show'&&parts.length===3){
+      const item=catalog[pkg.toLowerCase()];
+      if(!item){line('<span class="warn">No demo information for that package.</span>');return;}
+      line('<b>Package:</b> '+safe(pkg));
+      line('<b>Description:</b> '+safe(item.description));
+      line('<b>Source:</b> illustrative example, not live repository data');return;
+    }
+    line('<span class="warn">Usage:</span> apt update | apt search &lt;name&gt; | apt install &lt;name&gt; | apt show &lt;name&gt; | apt remove &lt;name&gt;');
+  }
+  form.addEventListener('submit',e=>{e.preventDefault();run(input.value);input.value='';input.focus();});
+  document.querySelectorAll('[data-command]').forEach(btn=>btn.addEventListener('click',()=>{input.value=btn.dataset.command;run(input.value);input.value='';}));
+})();
+</script>
+</body>
+</html>
