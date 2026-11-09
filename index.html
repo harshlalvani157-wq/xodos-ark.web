@@ -232,6 +232,9 @@
 #donate .dn-copy code{flex:1;min-width:0;overflow-wrap:anywhere;font-size:.82rem;color:var(--dp2)}
 #donate .dn-copy button{border:0;cursor:pointer;color:#fff;background:var(--dp);border-radius:9px;padding:8px 14px;font:inherit;font-size:.82rem;font-weight:600}
 #donate .dn-copy button.done{background:#10b981}
+#donate .dn-copy button{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;min-width:44px;min-height:44px;padding:10px}
+#donate .dn-copy button svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#donate .dn-copy button span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 #donate .dn-label{font-size:.75rem;opacity:.6;margin-bottom:-6px}
 #donate .dn-qr{align-self:center;width:150px;height:150px;border-radius:14px;background:#fff;display:grid;place-items:center;overflow:hidden}
 #donate .dn-qr img{max-width:100%;max-height:100%}
@@ -251,33 +254,53 @@
 <p>XoDos-Ark is free and open source. If it saved you time or opened a new world on your phone, a small donation keeps it improving. Totally optional, always appreciated.</p>
 </div>
 <div class="dn-grid">
-
 <article class="dn-card rv">
-<span class="dn-tag">One-time</span>
-<h3>Ko-fi / Buy Me a Coffee</h3>
-<p>Prefer a quick one-off tip? Pay by card or PayPal in a few taps.</p>
-<!-- EDIT: your Ko-fi or Buy Me a Coffee link -->
-<a class="btn btn-primary" href="https://ko-fi.com/YOUR-NAME" target="_blank" rel="noopener">Buy us a coffee</a>
+  <span class="dn-tag">One-time</span>
+  <h3>Ko-fi / Buy Me a Coffee</h3>
+  <p>Prefer a quick one-off tip? Pay by card or PayPal in a few taps.</p>
+  <!-- Replace YOUR-NAME with your real Ko-fi username to activate this payment link. -->
+  <a class="btn btn-primary" href="https://ko-fi.com/YOUR-NAME" target="_blank" rel="noopener">Buy us a coffee</a>
 </article>
 <article class="dn-card rv">
-<span class="dn-tag">Crypto</span>
-<h3>Crypto</h3>
-<p>Send only on the network shown. Double-check the address before sending.</p>
-<!-- EDIT: your wallet addresses -->
-<div class="dn-label">USDT (TRC20)</div>
-<div class="dn-copy"><code>YOUR-USDT-ADDRESS</code><button class="copy-command" id="copyCommand" type="button" aria-label="Copy command to clipboard">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="10" height="10" rx="2"></rect><path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path></svg>
-          <span>Copy</span>
-        </button>
+  <span class="dn-tag">Bitcoin</span>
+  <h3>Bitcoin (BTC)</h3>
+  <p>Send Bitcoin using the Bitcoin network only. Check the address carefully before confirming.</p>
+  <div class="dn-label">BTC wallet address</div>
+  <div class="dn-copy">
+    <code>bc1qm9nq5hfhtjrtuul87ahhavw333azl2l68dnun9</code>
+    <button class="copy-command" type="button" data-copy="bc1qm9nq5hfhtjrtuul87ahhavw333azl2l68dnun9" aria-label="Copy Bitcoin wallet address" title="Copy wallet address">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+</article>
 
+<article class="dn-card rv">
+  <span class="dn-tag">USDT · TON</span>
+  <h3>USDT on TON</h3>
+  <p>Send USDT over the TON network only. Do not send it using TRC20, ERC20, or another network.</p>
+  <div class="dn-label">TON wallet address</div>
+  <div class="dn-copy">
+    <code>UQDfZRrwFOrh8gvFMbrlxjGXAP-cOJ-kwmVcJFmCPF_YsHcI</code>
+    <button class="copy-command" type="button" data-copy="UQDfZRrwFOrh8gvFMbrlxjGXAP-cOJ-kwmVcJFmCPF_YsHcI" aria-label="Copy USDT TON wallet address" title="Copy wallet address">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+</article>
 
-
-</div><div class="dn-label">Bitcoin (BTC)</div>
-<div class="dn-copy"><code>YOUR-BTC-ADDRESS</code>
-   <button class="copy-command" id="copyCommand" type="button" aria-label="Copy command to clipboard">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="9" y="9" width="10" height="10" rx="2"></rect><path d="M6 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"></path></svg>
-          <span>Copy</span>
-        </button></div>
+<article class="dn-card rv">
+  <span class="dn-tag">USDT · Solana</span>
+  <h3>USDT on Solana</h3>
+  <p>Send USDT over the Solana network only. Verify the selected network in your wallet before sending.</p>
+  <div class="dn-label">Solana wallet address</div>
+  <div class="dn-copy">
+    <code>A7f5VEvSP2tsomrDrgVqEfjKdWd9tMv7XDxkko8onMtd</code>
+    <button class="copy-command" type="button" data-copy="A7f5VEvSP2tsomrDrgVqEfjKdWd9tMv7XDxkko8onMtd" aria-label="Copy USDT Solana wallet address" title="Copy wallet address">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
 </article>
 </div>
 <div class="dn-why rv" aria-label="What donations help with">
@@ -291,7 +314,47 @@
 </div>
 </div>
 <script>
-document.querySelectorAll('#donate [data-copy]').forEach(function(b){b.addEventListener('click',async function(){var t=b.dataset.copy;try{await navigator.clipboard.writeText(t)}catch(e){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(_){}a.remove()}var o=b.textContent;b.textContent='Copied \u2713';b.classList.add('done');setTimeout(function(){b.textContent=o;b.classList.remove('done')},1600)})});
+(function () {
+  var buttons = document.querySelectorAll('#donate [data-copy]');
+
+  buttons.forEach(function (button) {
+    button.addEventListener('click', async function () {
+      var address = button.getAttribute('data-copy');
+      var label = button.querySelector('span');
+      var originalText = label ? label.textContent : button.textContent;
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(address);
+        } else {
+          var field = document.createElement('textarea');
+          field.value = address;
+          field.setAttribute('readonly', '');
+          field.style.position = 'fixed';
+          field.style.opacity = '0';
+          document.body.appendChild(field);
+          field.select();
+          var copied = document.execCommand('copy');
+          field.remove();
+          if (!copied) throw new Error('Clipboard copy failed');
+        }
+
+        if (label) label.textContent = 'Copied ✓';
+        else button.textContent = 'Copied ✓';
+        button.classList.add('done');
+      } catch (error) {
+        if (label) label.textContent = 'Copy failed';
+        else button.textContent = 'Copy failed';
+      }
+
+      window.setTimeout(function () {
+        if (label) label.textContent = originalText;
+        else button.textContent = originalText;
+        button.classList.remove('done');
+      }, 1800);
+    });
+  });
+})();
 </script>
 </section>
 
