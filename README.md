@@ -1,9 +1,6 @@
 # xodos-ark.web
  
 -------------------------------------------
-➕ we need to add this section in web : 
-1) fix donation .
--------------------------------------------
 
 # IMPORTANT CHANGES 🌟🌟
  
