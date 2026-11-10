@@ -132,7 +132,8 @@
     { name: 'Theames', avatar_url: 'assets/theames-discord.png', url: 'https://discord.gg/d2ChVhPfnF', label: 'project contributor' },
     { login: 'CosmyBeyondStars', label:'project contributor' },
     { login: 'Beauty114514', label:'project contributor'},
-    { login: 'KianoRoku18Ino' , label:'project contributor'}
+    { login: 'KianoRoku18Ino' , label:'project contributor'} ,
+    { login: 'PremLalvani',label:'project contributors '} 
   ];
 
   function mergeContributors(users) {
