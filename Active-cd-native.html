@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080512">
+  <meta name="description" content="XoDos-Ark is a native Android app that wraps the XoDos emulator in a secure container.">
+  <title>XoDos-Ark — Custom Drivers &amp; PRoot Vulkan Setup</title>
+
+  <style>
+    .native-command-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      width: 100%;
+      margin-top: 0.45rem;
+    }
+
+    .native-command-row code {
+      display: inline-block;
+      order: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    .native-command-row .copy-command {
+      order: 1;
+      flex: 0 0 auto;
+      margin-left: auto;
+      min-height: 2.15rem;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+    }
+
+    .copy-command.is-copied {
+      opacity: 0.8;
+    }
+  </style>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="grid"></div>
+  </div>
+
+  <nav aria-label="Primary navigation">
+    <div class="nav-inner glass">
+      <a class="brand" href="index.html" aria-label="XoDos-Ark home">
+        <img
+          class="brand-logo"
+          src="assets/logo.png"
+          alt=""
+          width="52"
+          height="52"
+          decoding="async"
+        >
+        <span>XoDos-Ark</span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links" id="navMenu">
+        <a href="index.html">Go back to home page</a>
+        <a class="btn btn-primary" href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">Download APK</a>
+      </div>
+    </div>
+  </nav>
+
+ 
+
+  <!-- STEP 2: VIDEO WALKTHROUGH -->
+  <section class="video-section wrap" aria-labelledby="demo-title">
+    <div class="sec-head rv">
+      <span class="kicker">· VIDEO WALKTHROUGH</span>
+      <h2 id="demo-title">Learn How to Add &amp; Activate <br><u>CUSTOM DRIVERS</u></h2>
+    </div>
+
+    <div class="video-shell glass rv">
+      <div class="video-frame">
+        <video
+          src="active-cd.mp4"
+          title="XoDos-Ark Custom Drivers walkthrough"
+          controls
+          playsinline
+          preload="metadata"></video>
+      </div>
+    </div>
+  </section>
+
+  <footer class="wrap">
+    <div class="glass">
+      <strong>XoDos-Ark</strong>
+      <div class="foot-links">
+        <a href="index.html">Home</a> · <a href="https://github.com/harshlalvani157-wq/xodos-ark.web" target="_blank" rel="noopener">Website source</a>
+      </div>
+      <p class="fine">Native Environment learning guide · Interactive terminal is a simulation.</p>
+    </div>
+  </footer>
+
+  <!-- Copy handler matching improve-perfomance.html -->
+  <script>
+    (function () {
+      'use strict';
+
+      var buttons = document.querySelectorAll('[data-copy-target]');
+
+      buttons.forEach(function (button) {
+        button.addEventListener('click', async function () {
+          var targetId = button.getAttribute('data-copy-target');
+          var commandElement = document.getElementById(targetId);
+
+          if (!commandElement) return;
+
+          var commandText = commandElement.textContent.trim();
+          var label = button.querySelector('span');
+
+          async function copyText(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+              await navigator.clipboard.writeText(text);
+              return true;
+            }
+
+            var helper = document.createElement('textarea');
+            helper.value = text;
+            helper.setAttribute('readonly', '');
+            helper.style.position = 'fixed';
+            helper.style.left = '-9999px';
+            helper.style.top = '0';
+
+            document.body.appendChild(helper);
+            helper.select();
+            helper.setSelectionRange(0, helper.value.length);
+
+            var successful = false;
+            try {
+              successful = document.execCommand('copy');
+            } finally {
+              document.body.removeChild(helper);
+            }
+
+            if (!successful) {
+              throw new Error('Clipboard copy failed');
+            }
+
+            return true;
+          }
+
+          try {
+            await copyText(commandText);
+            button.classList.add('is-copied');
+            if (label) label.textContent = 'Copied!';
+
+            if (button._copyTimer) {
+              clearTimeout(button._copyTimer);
+            }
+
+            button._copyTimer = setTimeout(function () {
+              button.classList.remove('is-copied');
+              if (label) label.textContent = 'Copy';
+            }, 1800);
+          } catch (error) {
+            if (label) label.textContent = 'Failed';
+            setTimeout(function () {
+              if (label) label.textContent = 'Copy';
+            }, 1800);
+          }
+        });
+      });
+    })();
+  </script>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
