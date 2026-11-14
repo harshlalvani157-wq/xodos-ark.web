@@ -5,7 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <meta name="theme-color" content="#080512">
   <meta name="description" content="XoDos-Ark is a native Android app that wraps the XoDos emulator in a secure container.">
-  <title>XoDos-Ark — One Ship. Every System. No Limits.</title>
+  <title>XoDos-Ark — Custom Drivers &amp; PRoot Vulkan Setup</title>
+
+  <style>
+    .native-command-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      width: 100%;
+      margin-top: 0.45rem;
+    }
+
+    .native-command-row code {
+      display: inline-block;
+      order: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    .native-command-row .copy-command {
+      order: 1;
+      flex: 0 0 auto;
+      margin-left: auto;
+      min-height: 2.15rem;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+    }
+
+    .copy-command.is-copied {
+      opacity: 0.8;
+    }
+  </style>
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,7 +53,7 @@
 
   <nav aria-label="Primary navigation">
     <div class="nav-inner glass">
-      <a class="brand" href="#top" aria-label="XoDos-Ark home">
+      <a class="brand" href="index.html" aria-label="XoDos-Ark home">
         <img
           class="brand-logo"
           src="assets/logo.png"
@@ -40,33 +76,231 @@
     </div>
   </nav>
 
+  <!-- STEP 1: PROOT VULKAN DRIVERS GUIDE -->
+  <section class="wrap" aria-labelledby="vulkan-distro-title">
+    <div class="sec-head rv">
+      <span class="kicker">STEP 1 · PROOT ENVIRONMENT ONLY</span>
+      <h2 id="vulkan-distro-title">Install Vulkan Drivers in Your Linux Distro</h2>
+      <p>Before adding or activating custom drivers inside PRoot, you must install your Linux distribution's Vulkan driver package. Every distro uses its own package manager and package name, so copy and run the command that matches the distro you installed:</p>
+    </div>
+
+    <div class="steps">
+      <article class="card glass rv">
+        <h3>Common PRoot Distro Commands</h3>
+        <p>Open your PRoot terminal and run the command for your distribution:</p>
+
+        <div class="pkg-list">
+          <div class="pkg">
+            <div class="pkg-name">
+              Ubuntu / Debian / Kali
+              <span class="mgr">APT Package Manager</span>
+            </div>
+            <div class="native-command-row">
+              <code id="aptVulkanCommand">apt update &amp;&amp; apt install mesa-vulkan-drivers vulkan-tools</code>
+              <button
+                class="copy-command"
+                type="button"
+                data-copy-target="aptVulkanCommand"
+                aria-label="Copy Ubuntu Debian Kali Vulkan command"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+                </svg>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="pkg">
+            <div class="pkg-name">
+              Arch Linux
+              <span class="mgr">Pacman Package Manager</span>
+            </div>
+            <div class="native-command-row">
+              <code id="archVulkanCommand">pacman -Syu vulkan-icd-loader mesa vulkan-tools</code>
+              <button
+                class="copy-command"
+                type="button"
+                data-copy-target="archVulkanCommand"
+                aria-label="Copy Arch Linux Vulkan command"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+                </svg>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="pkg">
+            <div class="pkg-name">
+              Alpine Linux
+              <span class="mgr">APK Package Manager</span>
+            </div>
+            <div class="native-command-row">
+              <code id="alpineVulkanCommand">apk add mesa-vulkan-ati mesa-vulkan-freedreno vulkan-loader</code>
+              <button
+                class="copy-command"
+                type="button"
+                data-copy-target="alpineVulkanCommand"
+                aria-label="Copy Alpine Linux Vulkan command"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+                </svg>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="pkg">
+            <div class="pkg-name">
+              Fedora
+              <span class="mgr">DNF Package Manager</span>
+            </div>
+            <div class="native-command-row">
+              <code id="fedoraVulkanCommand">dnf install mesa-vulkan-drivers vulkan-loader vulkan-tools</code>
+              <button
+                class="copy-command"
+                type="button"
+                data-copy-target="fedoraVulkanCommand"
+                aria-label="Copy Fedora Vulkan command"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                  <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+                </svg>
+                <span>Copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top: 1.1rem;">
+          <strong>Using a different Linux distro?</strong> Because every distro names its Vulkan packages differently, copy this prompt and search Google or ask an AI assistant:
+        </p>
+        <div class="native-command-row">
+          <code id="aiSearchPrompt">How to install Mesa Vulkan drivers in [Your Distro Name] Linux</code>
+          <button
+            class="copy-command"
+            type="button"
+            data-copy-target="aiSearchPrompt"
+            aria-label="Copy search prompt"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+              <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+            </svg>
+            <span>Copy</span>
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- STEP 2: VIDEO WALKTHROUGH -->
   <section class="video-section wrap" aria-labelledby="demo-title">
     <div class="sec-head rv">
-      <span class="kicker">VIDEO WALKTHROUGH</span>
-      <h2 id="demo-title">Learn To Add & Active <br> <U>CUSTOM DRIVER'S</U></h2>
-      <!--<h5>DOWNLOAD THE PHANTOM PROCESSER KILLER APK FROM LINK BELOW VIDEO <br> <pre><code>⚠️IMPORTANT NOTICE ⚠️: <bdo dir="ltr"><br></bdo>It is necessary to connect your phone with the <br>wifi or if you dont got that then use another <br> phone hotspot and connect your phone</code></pre></h5>
-    </div>-->
-    <br>
+      <span class="kicker">STEP 2 · VIDEO WALKTHROUGH</span>
+      <h2 id="demo-title">Learn How to Add &amp; Activate <br><u>CUSTOM DRIVERS</u></h2>
+    </div>
+
     <div class="video-shell glass rv">
       <div class="video-frame">
-        <iframe
-          src="/active-cd.mp4"
-          title="XoDos-Ark Android setup short"
-          loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen></iframe>
+        <video
+          src="active-cd.mp4"
+          title="XoDos-Ark Custom Drivers walkthrough"
+          controls
+          playsinline
+          preload="metadata"></video>
       </div>
-     
-      
+    </div>
+  </section>
 
-       
-      
+  <footer class="wrap">
+    <div class="glass">
+      <strong>XoDos-Ark</strong>
+      <div class="foot-links">
+        <a href="index.html">Home</a> · <a href="https://github.com/harshlalvani157-wq/xodos-ark.web" target="_blank" rel="noopener">Website source</a>
       </div>
-    </section>
+      <p class="fine">Native Environment learning guide · Interactive terminal is a simulation.</p>
+    </div>
+  </footer>
 
+  <!-- Copy handler matching improve-perfomance.html -->
+  <script>
+    (function () {
+      'use strict';
 
-<footer class="wrap"><div class="glass"><strong>XoDos-Ark</strong><div class="foot-links"><a href="index.html">Home</a> · <a href="https://github.com/harshlalvani157-wq/xodos-ark.web" target="_blank" rel="noopener">Website source</a></div><p class="fine">Native Environment learning guide · Interactive terminal is a simulation.</p></div></footer>
+      var buttons = document.querySelectorAll('[data-copy-target]');
 
+      buttons.forEach(function (button) {
+        button.addEventListener('click', async function () {
+          var targetId = button.getAttribute('data-copy-target');
+          var commandElement = document.getElementById(targetId);
+
+          if (!commandElement) return;
+
+          var commandText = commandElement.textContent.trim();
+          var label = button.querySelector('span');
+
+          async function copyText(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+              await navigator.clipboard.writeText(text);
+              return true;
+            }
+
+            var helper = document.createElement('textarea');
+            helper.value = text;
+            helper.setAttribute('readonly', '');
+            helper.style.position = 'fixed';
+            helper.style.left = '-9999px';
+            helper.style.top = '0';
+
+            document.body.appendChild(helper);
+            helper.select();
+            helper.setSelectionRange(0, helper.value.length);
+
+            var successful = false;
+            try {
+              successful = document.execCommand('copy');
+            } finally {
+              document.body.removeChild(helper);
+            }
+
+            if (!successful) {
+              throw new Error('Clipboard copy failed');
+            }
+
+            return true;
+          }
+
+          try {
+            await copyText(commandText);
+            button.classList.add('is-copied');
+            if (label) label.textContent = 'Copied!';
+
+            if (button._copyTimer) {
+              clearTimeout(button._copyTimer);
+            }
+
+            button._copyTimer = setTimeout(function () {
+              button.classList.remove('is-copied');
+              if (label) label.textContent = 'Copy';
+            }, 1800);
+          } catch (error) {
+            if (label) label.textContent = 'Failed';
+            setTimeout(function () {
+              if (label) label.textContent = 'Copy';
+            }, 1800);
+          }
+        });
+      });
+    })();
+  </script>
 
   <script src="main.js" defer></script>
 </body>
