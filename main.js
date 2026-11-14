@@ -438,18 +438,27 @@
       }, 160);
     }
 
+    var waitingTimeout = 0;
+
     video.addEventListener("loadstart", function () {
-      showLoader("Loading video...");
+      if (video.readyState < 2) {
+        showLoader("Loading video...");
+      }
     });
+
+    // Only show buffering if waiting persists for more than 400ms (avoids popping up on quick timeline scrubbing release)
     video.addEventListener("waiting", function () {
-      showLoader("Buffering...");
+      if (waitingTimeout) window.clearTimeout(waitingTimeout);
+      waitingTimeout = window.setTimeout(function () {
+        if (video.paused || video.ended) return;
+        showLoader("Buffering...");
+      }, 400);
     });
+
     video.addEventListener("stalled", function () {
       showLoader("Slow network — buffering...");
     });
-    video.addEventListener("seeking", function () {
-      if (video.readyState < 3) showLoader("Seeking...");
-    });
+
     video.addEventListener("progress", function () {
       if (!state.active) return;
       var realPct = computeBufferedProgress(video);
@@ -459,15 +468,28 @@
       }
     });
 
-    video.addEventListener("canplay", hideLoader);
-    video.addEventListener("canplaythrough", hideLoader);
-    video.addEventListener("playing", hideLoader);
-    video.addEventListener("loadeddata", hideLoader);
-    video.addEventListener("seeked", function () {
-      if (video.readyState >= 3) hideLoader();
+    function clearWaiting() {
+      if (waitingTimeout) {
+        window.clearTimeout(waitingTimeout);
+        waitingTimeout = 0;
+      }
+      hideLoader();
+    }
+
+    video.addEventListener("canplay", clearWaiting);
+    video.addEventListener("canplaythrough", clearWaiting);
+    video.addEventListener("playing", clearWaiting);
+    video.addEventListener("loadeddata", clearWaiting);
+    video.addEventListener("seeked", clearWaiting);
+    video.addEventListener("timeupdate", function() {
+      if (state.active && video.readyState >= 2 && !video.paused) {
+        clearWaiting();
+      }
     });
+
     video.addEventListener("error", function () {
       stopTrickle();
+      if (waitingTimeout) window.clearTimeout(waitingTimeout);
       ui.label.textContent = "Video failed to load — tap to retry";
     });
 
