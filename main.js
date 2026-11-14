@@ -272,3 +272,255 @@
       if (!cachedUsers) status.textContent = 'PROJECT + COMMUNITY CONTRIBUTORS · LIVE ROSTER UNAVAILABLE';
     });
 })();
+
+
+/* ===== ULTRA-LIGHTWEIGHT VIDEO LOADING BAR (2GB/3GB RAM OPTIMIZED) ===== */
+(function initXodosVideoLoader() {
+  "use strict";
+
+  var attachedVideos = new WeakMap();
+
+  function createOverlayElement() {
+    var overlay = document.createElement("div");
+    overlay.className = "xodos-loader-overlay";
+    overlay.setAttribute("aria-live", "polite");
+    overlay.setAttribute("aria-label", "Loading video");
+
+    overlay.innerHTML =
+      '<div class="xodos-loader-scanlines">' +
+        '<div class="xodos-loader-bloom"></div>' +
+        '<div class="xodos-loader-track">' +
+          '<div class="xodos-loader-fill"></div>' +
+          '<span class="xodos-loader-pct">0%</span>' +
+        "</div>" +
+      "</div>" +
+      '<div class="xodos-loader-label">Loading video...</div>';
+
+    return {
+      overlay: overlay,
+      fill: overlay.querySelector(".xodos-loader-fill"),
+      bloom: overlay.querySelector(".xodos-loader-bloom"),
+      pct: overlay.querySelector(".xodos-loader-pct"),
+      label: overlay.querySelector(".xodos-loader-label"),
+    };
+  }
+
+  function computeBufferedProgress(video) {
+    try {
+      if (!video.duration || !isFinite(video.duration) || video.duration <= 0) {
+        return null;
+      }
+      var buffered = video.buffered;
+      if (!buffered || buffered.length === 0) return 0;
+
+      var currentTime = video.currentTime || 0;
+      var bufferedEnd = 0;
+
+      for (var i = 0; i < buffered.length; i++) {
+        if (buffered.start(i) <= currentTime + 0.5 && buffered.end(i) > bufferedEnd) {
+          bufferedEnd = buffered.end(i);
+        }
+      }
+      if (bufferedEnd === 0) {
+        bufferedEnd = buffered.end(buffered.length - 1);
+      }
+
+      var ratio = Math.min(1, Math.max(0, bufferedEnd / video.duration));
+      return Math.round(ratio * 100);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function attachToVideo(video) {
+    if (!video || attachedVideos.has(video)) return;
+    var parent = video.parentElement;
+    if (!parent) return;
+
+    if (window.getComputedStyle(parent).position === "static") {
+      parent.classList.add("xodos-vid-host");
+    }
+
+    var ui = createOverlayElement();
+    parent.appendChild(ui.overlay);
+
+    var state = {
+      active: false,
+      currentPct: 0,
+      targetPct: 0,
+      lastRenderedInt: -1,
+      rafId: 0,
+      trickleTimer: 0,
+    };
+
+    function renderFrame() {
+      state.rafId = 0;
+      if (!state.active) return;
+
+      var diff = state.targetPct - state.currentPct;
+      if (Math.abs(diff) < 0.25) {
+        state.currentPct = state.targetPct;
+      } else {
+        state.currentPct += diff * 0.18;
+      }
+
+      var scale = Math.min(1, Math.max(0.02, state.currentPct / 100));
+      ui.fill.style.transform = "scaleX(" + scale.toFixed(4) + ")";
+      ui.bloom.style.transform = "scaleX(" + Math.min(1, scale + 0.06).toFixed(4) + ")";
+
+      var intPct = Math.round(state.currentPct);
+      if (intPct !== state.lastRenderedInt) {
+        state.lastRenderedInt = intPct;
+        ui.pct.textContent = intPct + "%";
+      }
+
+      if (state.active && (Math.abs(state.targetPct - state.currentPct) >= 0.25 || state.targetPct < 100)) {
+        state.rafId = window.requestAnimationFrame(renderFrame);
+      }
+    }
+
+    function scheduleRender() {
+      if (!state.rafId && state.active) {
+        state.rafId = window.requestAnimationFrame(renderFrame);
+      }
+    }
+
+    function stopTrickle() {
+      if (state.trickleTimer) {
+        window.clearInterval(state.trickleTimer);
+        state.trickleTimer = 0;
+      }
+    }
+
+    function startTrickle() {
+      stopTrickle();
+      state.trickleTimer = window.setInterval(function () {
+        if (!state.active) return;
+        var realPct = computeBufferedProgress(video);
+        if (realPct !== null && realPct > state.targetPct) {
+          state.targetPct = Math.min(96, realPct);
+        } else if (state.targetPct < 90) {
+          state.targetPct += (92 - state.targetPct) * 0.08;
+        }
+        scheduleRender();
+      }, 220);
+    }
+
+    function showLoader(statusText) {
+      if (statusText) ui.label.textContent = statusText;
+      if (!state.active) {
+        state.active = true;
+        state.currentPct = 6;
+        state.targetPct = 16;
+        state.lastRenderedInt = -1;
+        ui.overlay.classList.add("is-active");
+        startTrickle();
+      }
+      scheduleRender();
+    }
+
+    function hideLoader() {
+      if (!state.active) return;
+      state.targetPct = 100;
+      state.currentPct = 100;
+      ui.fill.style.transform = "scaleX(1)";
+      ui.bloom.style.transform = "scaleX(1)";
+      ui.pct.textContent = "100%";
+      stopTrickle();
+
+      window.setTimeout(function () {
+        state.active = false;
+        if (state.rafId) {
+          window.cancelAnimationFrame(state.rafId);
+          state.rafId = 0;
+        }
+        ui.overlay.classList.remove("is-active");
+      }, 160);
+    }
+
+    video.addEventListener("loadstart", function () {
+      showLoader("Loading video...");
+    });
+    video.addEventListener("waiting", function () {
+      showLoader("Buffering...");
+    });
+    video.addEventListener("stalled", function () {
+      showLoader("Slow network — buffering...");
+    });
+    video.addEventListener("seeking", function () {
+      if (video.readyState < 3) showLoader("Seeking...");
+    });
+    video.addEventListener("progress", function () {
+      if (!state.active) return;
+      var realPct = computeBufferedProgress(video);
+      if (realPct !== null) {
+        state.targetPct = Math.max(state.targetPct, Math.min(98, realPct));
+        scheduleRender();
+      }
+    });
+
+    video.addEventListener("canplay", hideLoader);
+    video.addEventListener("canplaythrough", hideLoader);
+    video.addEventListener("playing", hideLoader);
+    video.addEventListener("loadeddata", hideLoader);
+    video.addEventListener("seeked", function () {
+      if (video.readyState >= 3) hideLoader();
+    });
+    video.addEventListener("error", function () {
+      stopTrickle();
+      ui.label.textContent = "Video failed to load — tap to retry";
+    });
+
+    ui.overlay.addEventListener("click", function () {
+      if (video.error || video.networkState === 3) {
+        ui.label.textContent = "Retrying video...";
+        video.load();
+      }
+    });
+
+    // Show immediately if metadata/stream hasn't reached HAVE_CURRENT_DATA yet
+    if (video.readyState < 2 && video.networkState !== 3) {
+      showLoader("Loading video...");
+    }
+
+    attachedVideos.set(video, { showLoader: showLoader, hideLoader: hideLoader });
+  }
+
+  function scanAndAttach(root) {
+    var scope = root && root.querySelectorAll ? root : document;
+    var videos = scope.querySelectorAll("video");
+    for (var i = 0; i < videos.length; i++) {
+      attachToVideo(videos[i]);
+    }
+  }
+
+  function boot() {
+    scanAndAttach(document);
+    if (typeof MutationObserver !== "undefined") {
+      var observer = new MutationObserver(function (mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+          var added = mutations[i].addedNodes;
+          for (var j = 0; j < added.length; j++) {
+            var node = added[j];
+            if (node.nodeType !== 1) continue;
+            if (node.tagName === "VIDEO") {
+              attachToVideo(node);
+            } else if (node.querySelectorAll) {
+              scanAndAttach(node);
+            }
+          }
+        }
+      });
+      observer.observe(document.body || document.documentElement, {
+        childList: true,
+        subtree: true,
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
