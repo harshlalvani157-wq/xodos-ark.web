@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080512">
+  <meta name="description" content="XoDos-Ark performance optimization guide.">
+  <title>XoDos-Ark — Improve Performance</title>
+
+  <style>
+    /* All page-local changes stay inside this HTML file. */
+
+    .brand-logo {
+      width: 2.25rem !important;
+      height: 2.25rem !important;
+      object-fit: contain;
+    }
+
+    @media (max-width: 36rem) {
+      .brand-logo {
+        width: 2.85rem !important;
+        height: 2.85rem !important;
+      }
+    }
+
+    .contributors-console {
+      display: block;
+    }
+
+    .native-command-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      width: 100%;
+      margin-top: 0.75rem;
+    }
+
+    .native-command-row code {
+      display: inline-block;
+      order: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+    }
+
+    .native-command-row .copy-command {
+      order: 1;
+      flex: 0 0 auto;
+      margin-left: auto;
+      min-height: 2.15rem;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+    }
+
+    .copy-command.is-copied {
+      opacity: 0.8;
+    }
+
+    /* Responsive separator: always spans the available card width. */
+    .responsive-separator {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      border: 0;
+      border-top: 1px dashed rgba(220, 210, 255, 0.58);
+      margin: 1.35rem 0;
+      flex: 0 0 100%;
+    }
+  </style>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="bg" aria-hidden="true">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="grid"></div>
+  </div>
+
+  <nav aria-label="Primary navigation">
+    <div class="nav-inner glass">
+
+      <a class="brand" href="#top" aria-label="XoDos-Ark home">
+        <img
+          class="brand-logo"
+          src="assets/logo.png"
+          alt=""
+          width="52"
+          height="52"
+          decoding="async"
+        >
+        <span>XoDos-Ark</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        id="navToggle"
+        type="button"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="navMenu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-links" id="navMenu">
+        <a href="index.html">Go back to home page</a>
+
+        <a
+          class="btn btn-primary"
+          href="https://github.com/xodiosx/XoDos-Ark/releases"
+          target="_blank"
+          rel="noopener"
+        >
+          Download APK
+        </a>
+      </div>
+
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <header class="hero wrap">
+      <h1>
+        LET'S IMPROVE YOUR
+        <span class="ark"><br>PERFORMANCE</span>
+        <br>
+      </h1>
+    </header>
+
+    <!-- MALI SECTION -->
+
+    <section id="contributors" class="wrap contributors-section">
+
+      <div class="sec-head rv">
+        <h2>FOR MALI DEVICES</h2>
+        <p>Steps for devices with MediaTek processors.</p>
+      </div>
+
+      <div class="contributors-panel glass rv">
+
+        <div class="contributors-panel__glow" aria-hidden="true"></div>
+
+        <div class="contributors-topbar" aria-hidden="true">
+          <div class="contributors-window-dots">
+            <i></i><i></i><i></i>
+          </div>
+
+          <span class="contributors-window-title"></span>
+          <span class="contributors-window-mark">
+            ● <u>ONLY FOR MALI DEVICES</u>
+          </span>
+        </div>
+
+        <div class="contributors-console">
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h2>1) For Native Environment:</h2>
+            </span>
+
+            <br>
+
+            <h3>
+              Install drivers by running this command in Native Environment.
+            </h3>
+          </div>
+
+          <div class="native-command-row">
+
+            <code id="maliCommand">
+              apt install mali-vulkan-panvk
+            </code>
+
+            <button
+              class="copy-command"
+              type="button"
+              data-copy-target="maliCommand"
+              aria-label="Copy Mali command"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+
+          </div>
+
+          <br>
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h3>And:</h3>
+            </span>
+
+            <br>
+
+            <h3>
+              Set <u>VULKAN From LLVMPIPE To PANVK</u> drivers in Drawer.
+            </h3>
+
+            <h5>
+              <a href="/vulkan-as-panvk.html" class="quote">
+                Want to see how to set Vulkan as PANVK?
+              </a>
+            </h5>
+          </div>
+
+          <br>
+          <div class="responsive-separator" role="separator" aria-hidden="true"></div>
+          <br><br>
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h2>2) For Proot Environment:</h2>
+            </span>
+
+            <br>
+
+            <h3>
+              Set <u>VULKAN From LLVMPIPE To PANVK</u> drivers in Drawer.
+            </h3>
+
+            <h5>
+              <a href="/vulkan-as-panvk.html" class="quote">
+                Want to see how to set Vulkan as PANVK?
+              </a>
+            </h5>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ADRENO SECTION -->
+
+    <section id="adreno-drivers" class="wrap contributors-section">
+
+      <div class="sec-head rv">
+        <h2>FOR ADRENO DEVICES</h2>
+        <p>Steps for devices with Snapdragon processors.</p>
+      </div>
+
+      <div class="contributors-panel glass rv">
+
+        <div class="contributors-panel__glow" aria-hidden="true"></div>
+
+        <div class="contributors-topbar" aria-hidden="true">
+          <div class="contributors-window-dots">
+            <i></i><i></i><i></i>
+          </div>
+
+          <span class="contributors-window-title"></span>
+          <span class="contributors-window-mark">
+            ● <u>ONLY FOR ADRENO DEVICES</u>
+          </span>
+        </div>
+
+        <div class="contributors-console">
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h2>1) For Native Environment:</h2>
+            </span>
+
+            <br>
+
+            <h3>
+              Install drivers by running this command in Native Environment.
+            </h3>
+          </div>
+
+          <div class="native-command-row">
+
+            <code id="adrenoCommand">
+              apt install mesa-vulkan-icd-freedreno
+            </code>
+
+            <button
+              class="copy-command"
+              type="button"
+              data-copy-target="adrenoCommand"
+              aria-label="Copy Adreno command"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="8" y="8" width="12" height="12" rx="2"></rect>
+                <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+
+          </div>
+
+          <br>
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h3>And:</h3>
+            </span>
+
+            <br>
+
+            <h3>
+              Set <u>VULKAN From LLVMPIPE To TURNIP</u> drivers in Drawer.
+            </h3>
+
+            <h5>
+              <a href="/vulkan-as-turnip.html" class="quote">
+                Want to see how to set Vulkan as TRUNIP ?
+              </a>
+            </h5>
+          </div>
+
+          <br>
+          <div class="responsive-separator" role="separator" aria-hidden="true"></div>
+          <br><br>
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h2>2) For Proot Environment:</h2>
+            </span>
+
+            <br>
+
+            <h3>
+              Set <u>VULKAN From LLVMPIPE To TURNIP</u> drivers in Drawer.
+            </h3>
+
+            <h5>
+              <a href="/vulkan-as-turnip.html" class="quote">
+                Want to see how to set Vulkan as TURNIP ?
+              </a>
+            </h5>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    
+    <!-- custom drivers section -->
+    
+    <section id="adreno-drivers" class="wrap contributors-section">
+
+      <div class="sec-head rv">
+        <h2>CUSTOM DRIVERS </h2>
+        <p>Instructions for adding custom drivers. 
+        <br>
+        COMPLETELY OPTIONAL.</p>
+      </div>
+
+      <div class="contributors-panel glass rv">
+
+        <div class="contributors-panel__glow" aria-hidden="true"></div>
+
+        <div class="contributors-topbar" aria-hidden="true">
+          <div class="contributors-window-dots">
+            <i></i><i></i><i></i>
+          </div>
+
+          <span class="contributors-window-title"></span>
+          <span class="contributors-window-mark">
+            ● <u>OPTIONAL FOR BOTH DEVICES ADRENO & MALI DEVICES</u>
+          </span>
+        </div>
+
+        <div class="contributors-console">
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h2>1) For Native Environment:</h2>
+            </span>
+
+            <br>
+
+            <h3>
+              Set <u>VULKAN From LLVMPIPE To WRAPPER</u> DRIVERS.
+            </h3>
+          </div>
+            <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h5><a href="/vulkan-as-wrapper.html" class="quote">
+  Want to see how to set Vulkan as Wrapper ?
+</a></h5>
+ </div>
+ 
+ <br>
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h3>And:</h3>
+            </span>
+
+            <br>
+
+            <h3>
+               <u> Add CUSTOM DRIVERS zip file in adernotools</u> option & <u>Activate the CUSTOM DRIVERS </u>.
+            </h3>
+
+            <h5>
+              <a href="/Active-cd.html" class="quote">
+                Learn to set Add && Activate CUSTOM DRIVERS ?
+              </a>
+            </h5>
+          </div>
+
+          <br>
+          <div class="responsive-separator" role="separator" aria-hidden="true"></div>
+          <br><br>
+
+          <div class="contributors-command">
+            <span class="contributors-prompt">
+              <h2>2) For Proot Environment:</h2>
+            </span>
+
+            <br>
+
+            <h3><u>Download The Vulkan driver's of your linux distro</u> through command &&
+              Set <u>VULKAN From LLVMPIPE To VULKAN</u> drivers in Drawer.
+            </h3>
+
+            <h5>
+              <a href="/vulkan-as-wrapper.html" class="quote">
+                Learn To Download vulkan for your linux distro && how to set Vulkan as TURNIP ?
+              </a>
+              
+              <div class="contributors-command">
+            <span class="contributors-prompt">
+              <br>
+              
+              <br>
+              
+              <h3>And:</h3>
+            </span>
+
+            <br>
+
+            <h3>
+               <u> Add CUSTOM DRIVERS zip file in adernotools</u> option & <u>Activate the CUSTOM DRIVERS </u>.
+            </h3>
+
+            <h5>
+              <a href="/Active-cd.html" class="quote">
+                Learn to set Add && Activate CUSTOM DRIVERS ?
+              </a>
+            </h5>
+          </div>
+            </h5>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Independent copy handler for both commands -->
+  <script>
+    (function () {
+      'use strict';
+
+      var buttons = document.querySelectorAll('[data-copy-target]');
+
+      buttons.forEach(function (button) {
+
+        button.addEventListener('click', async function () {
+
+          var targetId = button.getAttribute('data-copy-target');
+          var commandElement = document.getElementById(targetId);
+
+          if (!commandElement) return;
+
+          var commandText = commandElement.textContent.trim();
+          var label = button.querySelector('span');
+
+          async function copyText(text) {
+
+            if (navigator.clipboard && window.isSecureContext) {
+              await navigator.clipboard.writeText(text);
+              return true;
+            }
+
+            var helper = document.createElement('textarea');
+
+            helper.value = text;
+            helper.setAttribute('readonly', '');
+            helper.style.position = 'fixed';
+            helper.style.left = '-9999px';
+            helper.style.top = '0';
+
+            document.body.appendChild(helper);
+            helper.select();
+            helper.setSelectionRange(0, helper.value.length);
+
+            var successful = false;
+
+            try {
+              successful = document.execCommand('copy');
+            } finally {
+              document.body.removeChild(helper);
+            }
+
+            if (!successful) {
+              throw new Error('Clipboard copy failed');
+            }
+
+            return true;
+          }
+
+          try {
+
+            await copyText(commandText);
+
+            button.classList.add('is-copied');
+
+            if (label) {
+              label.textContent = 'Copied!';
+            }
+
+            if (button._copyTimer) {
+              clearTimeout(button._copyTimer);
+            }
+
+            button._copyTimer = setTimeout(function () {
+              button.classList.remove('is-copied');
+
+              if (label) {
+                label.textContent = 'Copy';
+              }
+            }, 1800);
+
+          } catch (error) {
+
+            if (label) {
+              label.textContent = 'Failed';
+            }
+
+            setTimeout(function () {
+              if (label) {
+                label.textContent = 'Copy';
+              }
+            }, 1800);
+
+            console.error('Copy failed:', error);
+          }
+
+        });
+
+      });
+
+    })();
+  </script>
+
+  <script src="main.js" defer></script>
+
+</body>
+</html>
