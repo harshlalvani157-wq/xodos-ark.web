@@ -96,7 +96,7 @@
               <span class="mgr">APT Package Manager</span>
             </div>
             <div class="native-command-row">
-              <code id="aptVulkanCommand">apt update &amp;&amp; apt install mesa-vulkan-drivers vulkan-tools</code>
+              <code id="aptVulkanCommand">apt update && apt install mesa-utils xwayland libvulkan-dev mesa-vulkan-drivers libgl1-mesa-dri libglx-mesa0 libegl-mesa0 vulkan-tools</code>
               <button
                 class="copy-command"
                 type="button"
@@ -118,7 +118,7 @@
               <span class="mgr">Pacman Package Manager</span>
             </div>
             <div class="native-command-row">
-              <code id="archVulkanCommand">pacman -Syu vulkan-icd-loader mesa vulkan-tools</code>
+              <code id="archVulkanCommand">pacman -Syu && pacman -S mesa-utils vulkan-devel mesa vulkan-tools  vulkan-virtio</code>
               <button
                 class="copy-command"
                 type="button"
@@ -140,7 +140,8 @@
               <span class="mgr">APK Package Manager</span>
             </div>
             <div class="native-command-row">
-              <code id="alpineVulkanCommand">apk add mesa-vulkan-ati mesa-vulkan-freedreno vulkan-loader</code>
+              <code id="alpineVulkanCommand">apk update
+apk add mesa-utils mesa-egl mesa-gles vulkan-loader mesa-dri-gallium vulkan-tools</code>
               <button
                 class="copy-command"
                 type="button"
@@ -162,7 +163,8 @@
               <span class="mgr">DNF Package Manager</span>
             </div>
             <div class="native-command-row">
-              <code id="fedoraVulkanCommand">dnf install mesa-vulkan-drivers vulkan-loader vulkan-tools</code>
+              <code id="fedoraVulkanCommand">dnf upgrade -y
+dnf install -y glx-utils vulkan-loader-devel mesa-dri-drivers vulkan-tools</code>
               <button
                 class="copy-command"
                 type="button"
