@@ -181,25 +181,23 @@
     link.setAttribute('aria-label', user.url ? 'Open XoDos-Ark Discord community for ' + displayName : 'Open GitHub profile for ' + login);
     if (isClone) link.tabIndex = -1;
 
-    var shell = document.createElement('span');
-    shell.className = 'contributors-avatar-shell';
+    // Circular profile image, matching the deployed contributors layout.
+    var avatarShell = document.createElement('span');
+    avatarShell.className = 'contributors-avatar-shell';
+    avatarShell.setAttribute('aria-hidden', 'true');
+
     var avatar = document.createElement('img');
-    var apiAvatar = typeof user.avatar_url === 'string' && (/^https:\/\/avatars\.githubusercontent\.com\//.test(user.avatar_url) || /^assets\/contributors\/[a-zA-Z0-9._-]+$/.test(user.avatar_url))
-      ? user.avatar_url
-      : 'https://github.com/' + encodeURIComponent(login) + '.png?size=160';
-    avatar.src = apiAvatar;
     avatar.alt = '';
     avatar.loading = 'lazy';
     avatar.decoding = 'async';
+    avatar.src = user.avatar_url || (login ? 'https://github.com/' + encodeURIComponent(login) + '.png?size=160' : '');
     avatar.referrerPolicy = 'no-referrer';
-    avatar.addEventListener('error', function() {
-      var fallback = document.createElement('span');
-      fallback.className = 'contributors-avatar-fallback';
-      fallback.textContent = displayName.slice(0, 2).toUpperCase();
-      shell.replaceChildren(fallback);
-    }, { once: true });
-    shell.appendChild(avatar);
-    link.appendChild(shell);
+    avatar.onerror = function() {
+      avatarShell.textContent = (displayName.charAt(0) || '?').toUpperCase();
+      avatarShell.classList.add('contributors-avatar-fallback');
+    };
+    if (avatar.src) avatarShell.appendChild(avatar);
+    link.appendChild(avatarShell);
 
     var name = document.createElement('span');
     name.className = 'contributors-name';
