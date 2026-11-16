@@ -544,3 +544,89 @@
     boot();
   }
 })();
+
+
+/* ========================================================================
+   MANUAL NORMAL-USER CONTRIBUTORS
+   GitHub: { login: 'username', label: 'Bug reporter' }
+   No GitHub: { name: 'Display Name', avatar_url: 'assets/contributors/name.png',
+                url: 'https://example.com/profile', label: 'Helpful suggestion' }
+   For non-GitHub users, `url` is optional; omit it for a non-clickable card.
+   ======================================================================== */
+(function renderNormalUserContributors() {
+  'use strict';
+  var grid = document.querySelector('[data-normal-contributors-grid]');
+  var count = document.querySelector('[data-normal-contributors-count]');
+  if (!grid) return;
+
+  // ADD / EDIT NORMAL CONTRIBUTORS HERE:
+  var normalUserContributors = [
+    // this explain how to add a nor-user
+    // GitHub account:
+    // { login: 'github-username', label: 'Bug reporter' },
+    // No GitHub account:
+    // { name: 'Alex', avatar_url: 'assets/contributors/alex.png', label: 'Helpful suggestion' }
+    {
+  name: 'KING_GAMING734',
+  avatar_url: 'assets/nor-usr-contributors/KING_GAMING734.jpg',
+  url: '',
+  label: 'Helped To Find Bug'
+}
+  ];
+
+  function addCard(user) {
+    if (!user) return;
+    var login = String(user.login || '').trim();
+    var name = String(user.name || login).trim();
+    if (!name) return;
+
+    var card = document.createElement(login || user.url ? 'a' : 'div');
+    card.className = 'normal-contributor-card';
+    if (login) {
+      card.href = 'https://github.com/' + encodeURIComponent(login);
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+    } else if (user.url) {
+      card.href = user.url;
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
+    }
+
+    var avatarWrap = document.createElement('span');
+    avatarWrap.className = 'normal-contributor-avatar';
+    var avatar = document.createElement('img');
+    avatar.alt = '';
+    avatar.loading = 'lazy';
+    avatar.decoding = 'async';
+    avatar.src = user.avatar_url || (login ? 'https://github.com/' + encodeURIComponent(login) + '.png?size=160' : '');
+    avatar.onerror = function() {
+      avatar.remove();
+      avatarWrap.textContent = name.charAt(0).toUpperCase();
+      avatarWrap.classList.add('normal-contributor-avatar--fallback');
+    };
+    if (avatar.src) avatarWrap.appendChild(avatar);
+    else {
+      avatarWrap.textContent = name.charAt(0).toUpperCase();
+      avatarWrap.classList.add('normal-contributor-avatar--fallback');
+    }
+
+    var title = document.createElement('span');
+    title.className = 'normal-contributor-name';
+    title.textContent = name;
+    var label = document.createElement('span');
+    label.className = 'normal-contributor-label';
+    label.textContent = user.label || 'Community contributor';
+    card.appendChild(avatarWrap);
+    card.appendChild(title);
+    card.appendChild(label);
+    grid.appendChild(card);
+  }
+
+  normalUserContributors.forEach(addCard);
+  if (count) count.textContent = normalUserContributors.length +
+    (normalUserContributors.length === 1 ? ' contributor' : ' contributors');
+  if (!normalUserContributors.length) {
+    var empty = grid.querySelector('.normal-contributors-empty');
+    if (empty) empty.hidden = false;
+  }
+})();
