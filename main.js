@@ -568,7 +568,7 @@
     // { name: 'Alex', avatar_url: 'assets/contributors/alex.png', label: 'Helpful suggestion' }
     {
   name: 'KING_GAMING734',
-  avatar_url: 'assets/nor-usr-contributors/KING_GAMING734.jpg',
+  avatar_url: 'assets/contributors/nor-usr/KING_GAMING734.jpg',
   url: '',
   label: 'Helped To Find Bug'
 }
