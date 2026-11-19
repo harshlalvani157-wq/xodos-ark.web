@@ -272,279 +272,7 @@
 })();
 
 
-/* ===== ULTRA-LIGHTWEIGHT VIDEO LOADING BAR (2GB/3GB RAM OPTIMIZED) ===== */
-(function initXodosVideoLoader() {
-  "use strict";
-
-  var attachedVideos = new WeakMap();
-
-  function createOverlayElement() {
-    var overlay = document.createElement("div");
-    overlay.className = "xodos-loader-overlay";
-    overlay.setAttribute("aria-live", "polite");
-    overlay.setAttribute("aria-label", "Loading video");
-
-    overlay.innerHTML =
-      '<div class="xodos-loader-scanlines">' +
-        '<div class="xodos-loader-bloom"></div>' +
-        '<div class="xodos-loader-track">' +
-          '<div class="xodos-loader-fill"></div>' +
-          '<span class="xodos-loader-pct">0%</span>' +
-        "</div>" +
-      "</div>" +
-      '<div class="xodos-loader-label">Loading video...</div>';
-
-    return {
-      overlay: overlay,
-      fill: overlay.querySelector(".xodos-loader-fill"),
-      bloom: overlay.querySelector(".xodos-loader-bloom"),
-      pct: overlay.querySelector(".xodos-loader-pct"),
-      label: overlay.querySelector(".xodos-loader-label"),
-    };
-  }
-
-  function computeBufferedProgress(video) {
-    try {
-      if (!video.duration || !isFinite(video.duration) || video.duration <= 0) {
-        return null;
-      }
-      var buffered = video.buffered;
-      if (!buffered || buffered.length === 0) return 0;
-
-      var currentTime = video.currentTime || 0;
-      var bufferedEnd = 0;
-
-      for (var i = 0; i < buffered.length; i++) {
-        if (buffered.start(i) <= currentTime + 0.5 && buffered.end(i) > bufferedEnd) {
-          bufferedEnd = buffered.end(i);
-        }
-      }
-      if (bufferedEnd === 0) {
-        bufferedEnd = buffered.end(buffered.length - 1);
-      }
-
-      var ratio = Math.min(1, Math.max(0, bufferedEnd / video.duration));
-      return Math.round(ratio * 100);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  function attachToVideo(video) {
-    if (!video || attachedVideos.has(video)) return;
-    var parent = video.parentElement;
-    if (!parent) return;
-
-    if (window.getComputedStyle(parent).position === "static") {
-      parent.classList.add("xodos-vid-host");
-    }
-
-    var ui = createOverlayElement();
-    parent.appendChild(ui.overlay);
-
-    var state = {
-      active: false,
-      currentPct: 0,
-      targetPct: 0,
-      lastRenderedInt: -1,
-      rafId: 0,
-      trickleTimer: 0,
-    };
-
-    function renderFrame() {
-      state.rafId = 0;
-      if (!state.active) return;
-
-      var diff = state.targetPct - state.currentPct;
-      if (Math.abs(diff) < 0.25) {
-        state.currentPct = state.targetPct;
-      } else {
-        state.currentPct += diff * 0.18;
-      }
-
-      var scale = Math.min(1, Math.max(0.02, state.currentPct / 100));
-      ui.fill.style.transform = "scaleX(" + scale.toFixed(4) + ")";
-      ui.bloom.style.transform = "scaleX(" + Math.min(1, scale + 0.06).toFixed(4) + ")";
-
-      var intPct = Math.round(state.currentPct);
-      if (intPct !== state.lastRenderedInt) {
-        state.lastRenderedInt = intPct;
-        ui.pct.textContent = intPct + "%";
-      }
-
-      if (state.active && (Math.abs(state.targetPct - state.currentPct) >= 0.25 || state.targetPct < 100)) {
-        state.rafId = window.requestAnimationFrame(renderFrame);
-      }
-    }
-
-    function scheduleRender() {
-      if (!state.rafId && state.active) {
-        state.rafId = window.requestAnimationFrame(renderFrame);
-      }
-    }
-
-    function stopTrickle() {
-      if (state.trickleTimer) {
-        window.clearInterval(state.trickleTimer);
-        state.trickleTimer = 0;
-      }
-    }
-
-    function startTrickle() {
-      stopTrickle();
-      state.trickleTimer = window.setInterval(function () {
-        if (!state.active) return;
-        var realPct = computeBufferedProgress(video);
-        if (realPct !== null && realPct > state.targetPct) {
-          state.targetPct = Math.min(96, realPct);
-        } else if (state.targetPct < 90) {
-          state.targetPct += (92 - state.targetPct) * 0.08;
-        }
-        scheduleRender();
-      }, 220);
-    }
-
-    function showLoader(statusText) {
-      if (statusText) ui.label.textContent = statusText;
-      if (!state.active) {
-        state.active = true;
-        state.currentPct = 6;
-        state.targetPct = 16;
-        state.lastRenderedInt = -1;
-        ui.overlay.classList.add("is-active");
-        startTrickle();
-      }
-      scheduleRender();
-    }
-
-    function hideLoader() {
-      if (!state.active) return;
-      state.targetPct = 100;
-      state.currentPct = 100;
-      ui.fill.style.transform = "scaleX(1)";
-      ui.bloom.style.transform = "scaleX(1)";
-      ui.pct.textContent = "100%";
-      stopTrickle();
-
-      window.setTimeout(function () {
-        state.active = false;
-        if (state.rafId) {
-          window.cancelAnimationFrame(state.rafId);
-          state.rafId = 0;
-        }
-        ui.overlay.classList.remove("is-active");
-      }, 160);
-    }
-
-    var waitingTimeout = 0;
-
-    video.addEventListener("loadstart", function () {
-      if (video.readyState < 2) {
-        showLoader("Loading video...");
-      }
-    });
-
-    // Only show buffering if waiting persists for more than 400ms (avoids popping up on quick timeline scrubbing release)
-    video.addEventListener("waiting", function () {
-      if (waitingTimeout) window.clearTimeout(waitingTimeout);
-      waitingTimeout = window.setTimeout(function () {
-        if (video.paused || video.ended) return;
-        showLoader("Buffering...");
-      }, 400);
-    });
-
-    video.addEventListener("stalled", function () {
-      showLoader("Slow network — buffering...");
-    });
-
-    video.addEventListener("progress", function () {
-      if (!state.active) return;
-      var realPct = computeBufferedProgress(video);
-      if (realPct !== null) {
-        state.targetPct = Math.max(state.targetPct, Math.min(98, realPct));
-        scheduleRender();
-      }
-    });
-
-    function clearWaiting() {
-      if (waitingTimeout) {
-        window.clearTimeout(waitingTimeout);
-        waitingTimeout = 0;
-      }
-      hideLoader();
-    }
-
-    video.addEventListener("canplay", clearWaiting);
-    video.addEventListener("canplaythrough", clearWaiting);
-    video.addEventListener("playing", clearWaiting);
-    video.addEventListener("loadeddata", clearWaiting);
-    video.addEventListener("seeked", clearWaiting);
-    video.addEventListener("timeupdate", function() {
-      if (state.active && video.readyState >= 2 && !video.paused) {
-        clearWaiting();
-      }
-    });
-
-    video.addEventListener("error", function () {
-      stopTrickle();
-      if (waitingTimeout) window.clearTimeout(waitingTimeout);
-      ui.label.textContent = "Video failed to load — tap to retry";
-    });
-
-    ui.overlay.addEventListener("click", function () {
-      if (video.error || video.networkState === 3) {
-        ui.label.textContent = "Retrying video...";
-        video.load();
-      }
-    });
-
-    // Show immediately if metadata/stream hasn't reached HAVE_CURRENT_DATA yet
-    if (video.readyState < 2 && video.networkState !== 3) {
-      showLoader("Loading video...");
-    }
-
-    attachedVideos.set(video, { showLoader: showLoader, hideLoader: hideLoader });
-  }
-
-  function scanAndAttach(root) {
-    var scope = root && root.querySelectorAll ? root : document;
-    var videos = scope.querySelectorAll("video");
-    for (var i = 0; i < videos.length; i++) {
-      attachToVideo(videos[i]);
-    }
-  }
-
-  function boot() {
-    scanAndAttach(document);
-    if (typeof MutationObserver !== "undefined") {
-      var observer = new MutationObserver(function (mutations) {
-        for (var i = 0; i < mutations.length; i++) {
-          var added = mutations[i].addedNodes;
-          for (var j = 0; j < added.length; j++) {
-            var node = added[j];
-            if (node.nodeType !== 1) continue;
-            if (node.tagName === "VIDEO") {
-              attachToVideo(node);
-            } else if (node.querySelectorAll) {
-              scanAndAttach(node);
-            }
-          }
-        }
-      });
-      observer.observe(document.body || document.documentElement, {
-        childList: true,
-        subtree: true,
-      });
-    }
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
-  } else {
-    boot();
-  }
-})();
-
+/* Custom video loading overlay removed: YouTube handles its own buffering UI. */
 
 /* ========================================================================
    MANUAL NORMAL-USER CONTRIBUTORS
@@ -628,5 +356,178 @@
   if (!normalUserContributors.length) {
     var empty = grid.querySelector('.normal-contributors-empty');
     if (empty) empty.hidden = false;
+  }
+})();
+
+
+/* Slide-to-download: resolves the latest APK from the public GitHub release. */
+(function () {
+  'use strict';
+  var slider = document.getElementById('downloadSlider');
+  var thumb = document.getElementById('downloadSliderThumb');
+  var label = document.getElementById('downloadSliderLabel');
+  var status = document.getElementById('downloadSliderStatus');
+  if (!slider || !thumb || !label || !status) return;
+
+  var dragging = false;
+  var completed = false;
+  var startX = 0;
+  var currentX = 0;
+  var maxX = 0;
+
+  function measure() {
+    maxX = Math.max(0, slider.clientWidth - thumb.offsetWidth - 10);
+  }
+  measure();
+  window.addEventListener('resize', measure, { passive: true });
+
+  function setProgress(value) {
+    currentX = Math.max(0, Math.min(maxX, value));
+    var percent = maxX ? Math.round(currentX / maxX * 100) : 0;
+    thumb.style.transform = 'translateX(' + currentX + 'px)';
+    slider.style.setProperty('--download-progress', percent + '%');
+    thumb.setAttribute('aria-valuenow', String(percent));
+    return percent;
+  }
+
+  function reset() {
+    dragging = false;
+    slider.dataset.dragging = 'false';
+    setProgress(0);
+    slider.dataset.state = 'ready';
+    label.textContent = 'Slide to Download';
+  }
+
+  function start(event) {
+    if (completed || slider.dataset.state === 'loading') return;
+    measure();
+    dragging = true;
+    slider.dataset.dragging = 'true';
+    startX = event.clientX - currentX;
+    thumb.setPointerCapture(event.pointerId);
+    label.textContent = 'Keep sliding…';
+    event.preventDefault();
+  }
+
+  function move(event) {
+    if (!dragging) return;
+    var percent = setProgress(event.clientX - startX);
+    if (percent >= 96) {
+      dragging = false;
+      slider.dataset.dragging = 'false';
+      completed = true;
+      slider.dataset.state = 'loading';
+      label.textContent = 'Preparing download…';
+      status.textContent = 'Finding the latest APK release…';
+      beginDownload();
+    }
+  }
+
+  function end() {
+    if (!dragging) return;
+    dragging = false;
+    slider.dataset.dragging = 'false';
+    if (currentX < maxX * .96) {
+      reset();
+      status.textContent = '';
+    }
+  }
+
+  async function beginDownload() {
+    try {
+      var response = await fetch(
+        'https://api.github.com/repos/xodiosx/XoDos-Ark/releases/latest',
+        { headers: { 'Accept': 'application/vnd.github+json' } }
+      );
+      if (!response.ok) throw new Error('GitHub release lookup failed (' + response.status + ').');
+      var release = await response.json();
+      var apk = (release.assets || []).find(function (asset) {
+        return /\.apk$/i.test(asset.name || '');
+      });
+      if (!apk || !apk.browser_download_url) {
+        throw new Error('No APK asset was found in the latest release.');
+      }
+
+      var link = document.createElement('a');
+      link.href = apk.browser_download_url;
+      link.setAttribute('download', apk.name);
+      link.rel = 'noopener';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      slider.dataset.state = 'done';
+      label.textContent = 'Download Started';
+      status.textContent = 'Your APK download should begin shortly.';
+    } catch (error) {
+      completed = false;
+      slider.dataset.state = 'error';
+      label.textContent = 'Try Again';
+      status.textContent = (error && error.message ? error.message : 'Download could not start.') +
+        ' You can also use the GitHub Releases page.';
+      var fallback = document.createElement('a');
+      fallback.href = 'https://github.com/xodiosx/XoDos-Ark/releases';
+      fallback.target = '_blank';
+      fallback.rel = 'noopener';
+      fallback.textContent = ' Open releases';
+      status.appendChild(fallback);
+      resetAfterError = true;
+    }
+  }
+
+  var resetAfterError = false;
+  thumb.addEventListener('pointerdown', start);
+  thumb.addEventListener('pointermove', move);
+  thumb.addEventListener('pointerup', end);
+  thumb.addEventListener('pointercancel', end);
+  thumb.addEventListener('lostpointercapture', function () {
+    if (dragging) end();
+  });
+  thumb.addEventListener('click', function () {
+    if (resetAfterError) {
+      resetAfterError = false;
+      status.textContent = '';
+      reset();
+    }
+  });
+  thumb.addEventListener('keydown', function (event) {
+    if (completed || slider.dataset.state === 'loading') return;
+    if (event.key === 'ArrowRight' || event.key === 'End') {
+      event.preventDefault();
+      var next = event.key === 'End' ? maxX : currentX + Math.max(12, maxX * .08);
+      if (setProgress(next) >= 96) {
+        completed = true;
+        slider.dataset.state = 'loading';
+        label.textContent = 'Preparing download…';
+        status.textContent = 'Finding the latest APK release…';
+        beginDownload();
+      }
+    } else if (event.key === 'Home' || event.key === 'ArrowLeft') {
+      event.preventDefault();
+      reset();
+    }
+  });
+})();
+/* ===== LAZY YOUTUBE EMBEDS =====
+   Set data-youtube-id on a video iframe to activate that page's YouTube video.
+   The iframe remains blank until its native lazy-loading threshold is reached.
+*/
+(function initLazyYouTubeEmbeds() {
+  'use strict';
+  function activateYouTubeEmbeds() {
+    var frames = document.querySelectorAll('iframe[data-youtube-id]');
+    frames.forEach(function(frame) {
+      var id = (frame.getAttribute('data-youtube-id') || '').trim();
+      if (!id || id === 'PASTE_YOUTUBE_VIDEO_ID_HERE') return;
+      if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+      if (frame.getAttribute('src') === 'about:blank') {
+        frame.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0&modestbranding=1');
+      }
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', activateYouTubeEmbeds, { once: true });
+  } else {
+    activateYouTubeEmbeds();
   }
 })();
