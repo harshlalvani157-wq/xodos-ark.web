@@ -191,7 +191,18 @@
 <span class="kicker">Download</span>
 <h2>Ready to set sail?</h2>
 <p>Get the latest pre-built release package directly from GitHub.</p>
-<a class="btn btn-primary" href="https://github.com/xodiosx/XoDos-Ark/releases" target="_blank" rel="noopener">&darr;&nbsp; Get the Latest Release</a>
+<div class="download-slider" id="downloadSlider" data-state="ready">
+  <div class="download-slider__fill" aria-hidden="true"></div>
+  <button class="download-slider__thumb" id="downloadSliderThumb" type="button" role="slider" tabindex="0"
+          aria-label="Slide to download the latest APK" aria-valuemin="0" aria-valuemax="100"
+          aria-valuenow="0">
+    <svg class="download-slider__arrow" aria-hidden="true" viewBox="0 0 32 32" focusable="false">
+      <path d="M4 11H17V4L29 16L17 28V21H4Z" />
+    </svg>
+  </button>
+  <span class="download-slider__label" id="downloadSliderLabel">Slide to Download</span>
+</div>
+<p class="download-slider__status" id="downloadSliderStatus" role="status" aria-live="polite"></p>
 <div class="req">
 <span class="chip">Minimum <b>Android 10+</b></span>
 <span class="chip">Architecture <b>arm64-v8a</b></span>
