@@ -6,6 +6,42 @@
   <meta name="theme-color" content="#080512">
   <meta name="description" content="XoDos-Ark is a native Android app that wraps the XoDos emulator in a secure container.">
   <title>XoDos-Ark — One Ship. Every System. No Limits.</title>
+
+  <style>
+    .native-command-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      width: 100%;
+      margin-top: 0.45rem;
+    }
+
+    .native-command-row code {
+      display: inline-block;
+      order: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    .native-command-row .copy-command {
+      order: 1;
+      flex: 0 0 auto;
+      margin-left: auto;
+      min-height: 2.15rem;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+    }
+
+    .copy-command.is-copied {
+      opacity: 0.8;
+    }
+  </style>
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
