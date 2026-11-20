@@ -37,6 +37,33 @@
       cursor: pointer;
     }
 
+    .native-command-row .copy-command {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-top-color: rgba(255, 255, 255, 0.55);
+      border-radius: 0.65rem;
+      color: #fff;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.9), rgba(139, 92, 246, 0.72));
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      font: 600 0.82rem/1 Arial, sans-serif;
+    }
+
+    .native-command-row .copy-command svg {
+      display: block;
+      width: 1rem;
+      height: 1rem;
+      max-width: 1rem;
+      flex: 0 0 1rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
     .copy-command.is-copied {
       opacity: 0.8;
     }
